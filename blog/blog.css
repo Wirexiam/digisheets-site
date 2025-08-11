@@ -307,3 +307,17 @@ article .post-cover {
   border-radius: 10px;
   margin-top: 6px;
 }
+
+/* ===== Анимация лайка ===== */
+.post-stats__like {
+  transition: transform .12s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
+}
+.post-stats__like.like-anim {
+  transform: translateY(-2px) scale(1.04);
+}
+.post-stats__like[aria-pressed="true"] {
+  background: color-mix(in oklab, var(--accent) 20%, var(--card));
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 25%, transparent) inset;
+}
+.post-stats__like[aria-pressed="true"] span,
+.post-stats__like[aria-pressed="true"] { color: var(--text); }
