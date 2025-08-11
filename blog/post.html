@@ -9,6 +9,10 @@
   <link rel="stylesheet" href="/style.css">
   <link rel="stylesheet" href="/blog/blog.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <style>
+    /* На всякий случай исключим перекрытия кликов */
+    .post-stats__like { pointer-events: auto; position: relative; z-index: 1; }
+  </style>
 </head>
 <body>
   <header class="header">
@@ -60,8 +64,7 @@
   <script src="/main.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/14.1.0/markdown-it.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-  <!-- Модули (важен порядок) -->
-  <script type="module" src="/blog/stats.js"></script>
+  <!-- ВАЖНО: blog.js импортирует /blog/stats.js как модуль. Отдельно stats.js подключаем не нужно. -->
   <script type="module" src="/blog/blog.js"></script>
   <script>document.getElementById('year').textContent=new Date().getFullYear()</script>
 </body>

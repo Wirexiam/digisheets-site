@@ -1,4 +1,4 @@
-// /blog/blog.js — движок Markdown + Google Docs HTML + интеграция stats.js
+// /blog/blog.js — движок Markdown/Google Docs HTML + интеграция stats.js (модуль)
 import { initStatsList, initStatsSingle } from '/blog/stats.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -20,72 +20,52 @@ document.addEventListener('DOMContentLoaded', async () => {
     return r.text();
   }
 
-  // === Мини-YAML парсер =========================================
+  // === Мини-YAML ================================================
   function parseYAML(src) {
     const lines = String(src).replace(/\r\n?/g, '\n').split('\n');
     const root = {};
-    let currKey = null;
-    let currArr = null;
-
-    const commitArr = () => {
-      if (currKey !== null) { root[currKey] = currArr || []; }
-      currKey = null; currArr = null;
-    };
+    let currKey = null, currArr = null;
+    const commitArr = () => { if (currKey !== null) root[currKey] = currArr || []; currKey = null; currArr = null; };
 
     for (let raw of lines) {
       const line = raw.replace(/\t/g, '  ');
-      if (!line.trim()) { continue; }
+      if (!line.trim()) continue;
 
       const mArr = line.match(/^\s*-\s+(.*)$/);
-      if (mArr && currKey) {
-        if (!currArr) currArr = [];
-        currArr.push(mArr[1].trim());
-        continue;
-      }
+      if (mArr && currKey) { (currArr ||= []).push(mArr[1].trim()); continue; }
 
       const mKV = line.match(/^([A-Za-z0-9_-]+)\s*:\s*(.*)$/);
       if (mKV) {
         if (currArr) commitArr();
-
-        const key = mKV[1];
-        let val = mKV[2];
-
-        if (val === '' || val === null || typeof val === 'undefined') {
-          currKey = key;
-          currArr = [];
-        } else {
+        const key = mKV[1]; let val = mKV[2];
+        if (val === '' || val == null) { currKey = key; currArr = []; }
+        else {
           val = val.trim();
           if (/^(true|false)$/i.test(val)) root[key] = /^true$/i.test(val);
           else if (!isNaN(Number(val))) root[key] = Number(val);
           else root[key] = val.replace(/^"(.*)"$/, '$1').replace(/^'(.*)'$/, '$1');
-          currKey = null; currArr = null;
         }
-        continue;
       }
     }
     if (currArr) commitArr();
     return root;
   }
 
-  // === OFFLINE Markdown-рендерер ================================
+  // === Markdown (офлайновый) ====================================
   function renderMarkdownStrong(src) {
     const PLACE = [];
     const HOLE = (html) => `\u0000BLOCK${PLACE.push(html)-1}\u0000`;
-
     let text = String(src).replace(/\r\n?/g, '\n');
 
     text = text.replace(/```([a-zA-Z0-9_-]+)?\n([\s\S]*?)\n```/g, (_, lang='', code='') => {
       const cls = lang ? ` class="language-${esc(lang)}"` : '';
       return HOLE(`<pre><code${cls}>${esc(code)}</code></pre>`);
     });
-
     text = text.replace(/`([^`\n]+)`/g, (_, c) => HOLE(`<code>${esc(c)}</code>`));
     text = text.replace(/<!--[\s\S]*?-->/g, '');
 
-    const lines = text.split('\n');
-    const out = [];
+    const lines = text.split('\n'), out = [];
     let i = 0;
-
     const isHr  = (s) => /^\s*(?:-{3,}|_{3,}|\*{3,})\s*$/.test(s);
     const isH   = (s) => s.match(/^(#{1,6})\s+(.+)$/);
     const isQ   = (s) => /^\s*&gt;\s?/.test(s) || /^\s*>\s?/.test(s);
@@ -105,47 +85,63 @@ document.addEventListener('DOMContentLoaded', async () => {
       return cells.every(c => /^:?-{3,}:?$/.test(c));
     };
     const colAlign = (sepCells) => sepCells.map(c => {
-      const left  = c.startsWith(':');
-      const right = c.endsWith(':');
+      const left  = c.startsWith(':'), right = c.endsWith(':');
       if (left && right) return 'center';
       if (right) return 'right';
       return 'left';
     });
 
     const renderInline = (s) => {
-      let r = s;
+  let r = s;
 
-      r = r.replace(/\u0000BLOCK(\d+)\u0000/g, (_, n) => PLACE[Number(n)] ?? '');
+  // вернуть плейсхолдеры
+  r = r.replace(/\u0000BLOCK(\d+)\u0000/g, (_, n) => PLACE[Number(n)] ?? '');
 
-      r = r.replace(/!\[([^\]]*)\]\((\S+?)(?:\s+"([^"]*)")?\)/g,
-        (_, alt, url, title) => `<img alt="${esc(alt)}" src="${esc(url)}"${title?` title="${esc(title)}"`:''}>`);
+  // картинки
+  r = r.replace(/!\[([^\]]*)\]\((\S+?)(?:\s+"([^"]*)")?\)/g,
+    (_, alt, url, title) => `<img alt="${esc(alt)}" src="${esc(url)}"${title?` title="${esc(title)}"`:''}>`);
 
-      r = r.replace(/\[([^\]]+)\]\((\S+?)(?:\s+"([^"]*)")?\)/g,
-        (_, txt, href, title) => `<a href="${esc(href)}"${title?` title="${esc(title)}"`:''}>${txt}</a>`);
+  // ссылки
+  r = r.replace(/\[([^\]]+)\]\((\S+?)(?:\s+"([^"]*)")?\)/g,
+    (_, txt, href, title) => `<a href="${esc(href)}"${title?` title="${esc(title)}"`:''}>${txt}</a>`);
 
-      r = r.replace(/(^|[\s(])((?:https?:\/\/|mailto:)[^\s)]+)/g,
-        (_, pre, url) => `${pre}<a href="${esc(url)}">${esc(url)}</a>`);
+  // автоссылки
+  r = r.replace(/(^|[\s(])((?:https?:\/\/|mailto:)[^\s)]+)/g,
+    (_, pre, url) => `${pre}<a href="${esc(url)}">${esc(url)}</a>`);
 
-      r = r.replace(/~~([^~]+)~~/g, '<del>$1</del>')
-           .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-           .replace(/__([^_]+)__/g, '<strong>$1</strong>')
-           .replace(/(^|[\s(])\*([^*]+)\*(?=[\s).]|$)/g, '$1<em>$2</em>')
-           .replace(/(^|[\s(])_([^_]+)_(?=[\s).]|$)/g, '$1<em>$2</em>');
+  // 🔧 санитарка: убираем «висячие» жирные маркеры на границах строк/абзацев
+  // примеры, которые она лечит:
+  //   "** Текст"  → "Текст"
+  //   "Текст **"  → "Текст"
+  //   "__ Текст"  → "Текст"
+  //   "Текст __"  → "Текст"
+  r = r
+    .replace(/(^|\n)\*\*\s+/g, '$1')
+    .replace(/(^|\n)__\s+/g, '$1')
+    .replace(/\s+\*\*(?=$|\n)/g, '')
+    .replace(/\s+__(?=$|\n)/g, '');
 
-      return r;
-    };
+  // ~~зачёркнутый~~, **жирный**, *курсив*
+  r = r.replace(/~~([^~]+)~~/g, '<del>$1</del>')
+       .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+       .replace(/__([^_]+)__/g, '<strong>$1</strong>')
+       .replace(/(^|[\s(])\*([^*]+)\*(?=[\s).]|$)/g, '$1<em>$2</em>')
+       .replace(/(^|[\s(])_([^_]+)_(?=[\s).]|$)/g, '$1<em>$2</em>');
+
+  return r;
+};
+
 
     const NOTE_MAP = [
       { re: /^(?:\*\*|__)?\s*(?:важно|важно!|important)\s*(?:\*\*|__)?\s*:?\s*/i, cls: 'important', title: 'Важно' },
       { re: /^(?:\*\*|__)?\s*(?:внимание|warning)\s*(?:\*\*|__)?\s*:?\s*/i,     cls: 'warning',  title: 'Внимание' },
-      { re: /^(?:\*\*|__)?\s*(?:пример|example)\s*(?:\*\*|__)?\s*:?\s*/i,       cls: 'example',   title: 'Пример' },
-      { re: /^(?:\*\*|__)?\s*(?:совет|tip)\s*(?:\*\*|__)?\s*:?\s*/i,            cls: 'tip',       title: 'Совет' },
-      { re: /^(?:\*\*|__)?\s*(?:заметка|note|инфо|info)\s*(?:\*\*|__)?\s*:?\s*/i, cls: 'info',    title: 'Заметка' },
+      { re: /^(?:\*\*|__)?\s*(?:пример|example)\s*(?:\*\*|__)?\s*:?\s*/i,       cls: 'example',  title: 'Пример' },
+      { re: /^(?:\*\*|__)?\s*(?:совет|tip)\s*(?:\*\*|__)?\s*:?\s*/i,            cls: 'tip',      title: 'Совет' },
+      { re: /^(?:\*\*|__)?\s*(?:заметка|note|инфо|info)\s*(?:\*\*|__)?\s*:?\s*/i, cls: 'info',   title: 'Заметка' },
     ];
 
     while (i < lines.length) {
       const line = lines[i];
-
       if (!line.trim()) { out.push(''); i++; continue; }
       if (isHr(line))   { out.push('<hr>'); i++; continue; }
 
@@ -160,9 +156,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         let first = buf[0] ?? '';
         let matched = null;
-        for (const m of NOTE_MAP) {
-          if (m.re.test(first)) { matched = m; first = first.replace(m.re, ''); break; }
-        }
+        for (const m of NOTE_MAP) { if (m.re.test(first)) { matched = m; first = first.replace(m.re, ''); break; } }
         if (matched) {
           const body = [first, ...buf.slice(1)].join('\n').trim();
           const inner = renderMarkdownStrong(body);
@@ -174,25 +168,18 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
 
       if (line.includes('|') && i+1 < lines.length && isTableSep(lines[i+1])) {
-        const headCells = splitRow(line);
-        const sepCells  = splitRow(lines[i+1]);
-        const aligns    = colAlign(sepCells);
+        const headCells = splitRow(line), sepCells = splitRow(lines[i+1]), aligns = colAlign(sepCells);
         i += 2;
-
         const bodyRows = [];
         while (i < lines.length && lines[i].trim() && lines[i].includes('|') && !isHr(lines[i]) && !isH(lines[i])) {
           bodyRows.push(lines[i]); i++;
         }
-
-        const th = headCells.map((c, idx) =>
-          `<th style="text-align:${aligns[idx]||'left'}">${renderInline(c)}</th>`).join('');
+        const th = headCells.map((c, idx) => `<th style="text-align:${aligns[idx]||'left'}">${renderInline(c)}</th>`).join('');
         const trs = bodyRows.map(r => {
           const cells = splitRow(r);
-          const tds = cells.map((c, idx) =>
-            `<td style="text-align:${aligns[idx]||'left'}">${renderInline(c)}</td>`).join('');
+          const tds = cells.map((c, idx) => `<td style="text-align:${aligns[idx]||'left'}">${renderInline(c)}</td>`).join('');
           return `<tr>${tds}</tr>`;
         }).join('');
-
         out.push(`<table><thead><tr>${th}</tr></thead><tbody>${trs}</tbody></table>`);
         continue;
       }
@@ -207,35 +194,24 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (isUL(line) || isOL(line)) {
         const ordered = isOL(line);
         const items = [];
-        let startNum = null;
-        let prevNum  = null;
-
+        let startNum = null, prevNum = null;
         while (i < lines.length && (isUL(lines[i]) || isOL(lines[i]))) {
-          let raw = lines[i];
-          let valueAttr = '';
-
+          let raw = lines[i], valueAttr = '';
           if (ordered) {
             const mm = raw.match(/^\s*(\d+)\.\s+(.*)$/);
             const currentNum = mm ? Number(mm[1]) : null;
             const content    = mm ? mm[2] : raw.replace(/^\s*\d+\.\s+/, '');
             if (startNum === null && currentNum !== null) startNum = currentNum;
-            if (prevNum !== null && currentNum !== null && currentNum !== prevNum + 1) {
-              valueAttr = ` value="${currentNum}"`;
-            }
+            if (prevNum !== null && currentNum !== null && currentNum !== prevNum + 1) valueAttr = ` value="${currentNum}"`;
             prevNum = currentNum ?? (prevNum === null ? 1 : prevNum + 1);
             raw = content;
           } else {
             raw = raw.replace(/^\s*[-*+]\s+/, '');
           }
-
           const task = raw.match(/^\[( |x|X)\]\s+(.*)$/);
-          let liInner;
-          if (task) {
-            const checked = /x/i.test(task[1]) ? ' checked' : '';
-            liInner = `<label class="task-item"><input type="checkbox" disabled${checked}> <span>${renderInline(task[2])}</span></label>`;
-          } else {
-            liInner = renderInline(raw);
-          }
+          let liInner = task
+            ? `<label class="task-item"><input type="checkbox" disabled${/x/i.test(task[1])?' checked':''}> <span>${renderInline(task[2])}</span></label>`
+            : renderInline(raw);
           items.push(`<li${valueAttr}>${liInner}</li>`);
           i++;
         }
@@ -253,7 +229,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
       out.push(`<p>${renderInline(p.join('\n')).replace(/\n/g,'<br>')}</p>`);
     }
-
     return out.join('\n').replace(/\u0000BLOCK(\d+)\u0000/g, (_, n) => PLACE[Number(n)] ?? '');
   }
 
@@ -261,38 +236,27 @@ document.addEventListener('DOMContentLoaded', async () => {
   function renderGoogleDocsHtml(srcHtml) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(srcHtml, 'text/html');
-
     doc.querySelectorAll('style, meta, link').forEach(n => n.remove());
     const root = doc.body || doc;
-
     const ALLOWED_ATTR = new Set(['href','src','alt','title']);
     const WALK = (node) => {
       if (node.nodeType === Node.ELEMENT_NODE) {
         ['class','style','width','height'].forEach(a => node.removeAttribute(a));
-        [...node.attributes].forEach(a => {
-          if (!ALLOWED_ATTR.has(a.name.toLowerCase())) node.removeAttribute(a.name);
-        });
-
+        [...node.attributes].forEach(a => { if (!ALLOWED_ATTR.has(a.name.toLowerCase())) node.removeAttribute(a.name); });
         if (['SPAN','FONT','U','S'].includes(node.tagName)) {
-          const parent = node.parentNode;
-          while (node.firstChild) parent.insertBefore(node.firstChild, node);
-          parent.removeChild(node);
-          return;
+          const parent = node.parentNode; while (node.firstChild) parent.insertBefore(node.firstChild, node); parent.removeChild(node); return;
         }
-
         [...node.childNodes].forEach(WALK);
       }
     };
     [...root.childNodes].forEach(WALK);
-
     return root.innerHTML;
   }
 
-  // === Загрузка манифеста =======================================
+  // === Манифест постов ==========================================
   let posts = [];
-  try {
-    posts = await loadJSON('/blog/posts.json');
-  } catch (e) {
+  try { posts = await loadJSON('/blog/posts.json'); }
+  catch (e) {
     if (LIST) LIST.innerHTML = `<div class="feature-card"><p>Не удалось загрузить список постов.</p><pre><code>${esc(e)}</code></pre></div>`;
     if (POST) POST.innerHTML = `<div class="post-content"><p>Не удалось загрузить манифест постов.</p><pre><code>${esc(e)}</code></pre></div>`;
     return;
@@ -300,12 +264,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // === Страница списка ==========================================
   if (LIST) {
-    const cut = (s, n=80) => {
-      const t = String(s || '').trim();
-      if (t.length <= n) return t;
-      return t.slice(0, n).replace(/\s+\S*$/, '') + '…';
-    };
-
+    const cut = (s, n=80) => { const t = String(s || '').trim(); if (t.length <= n) return t; return t.slice(0, n).replace(/\s+\S*$/, '') + '…'; };
     posts.sort((a, b) => new Date(b.date) - new Date(a.date));
     LIST.innerHTML = posts.map(p => {
       const desc = cut(p.description, 80);
@@ -315,20 +274,16 @@ document.addEventListener('DOMContentLoaded', async () => {
           <h3 class="feature-title">
             <a href="/blog/post.html?slug=${encodeURIComponent(p.slug)}">${esc(p.title)}</a>
           </h3>
-
           <div id="stats-${esc(p.slug)}" class="post-stats post-stats--list" aria-live="polite">
             <span class="post-stats__item" title="Просмотры">👁️ <b data-role="views">0</b></span>
             <span class="post-stats__item" title="Лайки">❤️ <b data-role="likes">0</b></span>
           </div>
-
           <p class="feature-text feature-text--compact">${esc(desc)}</p>
           <p class="feature-text feature-date">${fmtDate(p.date)}</p>
           <a class="btn secondary btn--compact" href="/blog/post.html?slug=${encodeURIComponent(p.slug)}">Читать</a>
         </article>
       `;
     }).join('');
-
-    // живое обновление метрик в карточках
     initStatsList(posts, { pollMs: 15000 });
   }
 
@@ -338,10 +293,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const slug = params.get('slug');
     const p = posts.find(x => x.slug === slug);
 
-    if (!p) {
-      POST.innerHTML = `<div class="post-content"><p>Пост не найден. <a href="/blog/">Вернуться в блог</a>.</p></div>`;
-      return;
-    }
+    if (!p) { POST.innerHTML = `<div class="post-content"><p>Пост не найден. <a href="/blog/">Вернуться в блог</a>.</p></div>`; return; }
 
     let title = p.title || '';
     let description = p.description || '';
@@ -355,15 +307,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         const raw = await loadText(htmlUrl);
         const clean = renderGoogleDocsHtml(raw);
 
-        const titleEl = document.getElementById('postTitle');
-        if (titleEl) titleEl.textContent = title;
+        const titleEl = document.getElementById('postTitle'); if (titleEl) titleEl.textContent = title;
         document.title = title ? `${title} — DigiSheets` : 'Пост — DigiSheets';
 
         const metaEl = document.getElementById('postMeta');
         if (metaEl) metaEl.textContent = `${date ? fmtDate(date) : ''}${tags.length ? ' • ' + tags.join(', ') : ''}`;
 
-        const mdDesc = document.getElementById('metaDesc');
-        if (mdDesc) mdDesc.setAttribute('content', description);
+        const mdDesc = document.getElementById('metaDesc'); if (mdDesc) mdDesc.setAttribute('content', description);
 
         let og = document.querySelector('meta[property="og:image"]');
         if (!og) { og = document.createElement('meta'); og.setAttribute('property','og:image'); document.head.appendChild(og); }
@@ -374,31 +324,19 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         try { if (window.hljs) POST.querySelectorAll('pre code').forEach(b => window.hljs.highlightElement(b)); } catch {}
       } catch (e) {
-        POST.innerHTML = `
-          <div class="post-content">
-            <p><strong>Не удалось загрузить HTML поста:</strong> ${esc(htmlUrl)}</p>
-            <pre><code>${esc(e)}</code></pre>
-            <p><a href="/blog/">← Вернуться в блог</a></p>
-          </div>`;
+        POST.innerHTML = `<div class="post-content"><p><strong>Не удалось загрузить HTML поста:</strong> ${esc(htmlUrl)}</p><pre><code>${esc(e)}</code></pre><p><a href="/blog/">← Вернуться в блог</a></p></div>`;
         return;
       }
     } else {
       const mdUrl = p.md && !/^https?:\/\//.test(p.md) ? `/blog/${p.md}` : p.md;
       let raw = '';
-      try {
-        raw = await loadText(mdUrl);
-      } catch (e) {
-        POST.innerHTML = `
-          <div class="post-content">
-            <p><strong>Не удалось загрузить файл:</strong> ${esc(mdUrl)}</p>
-            <pre><code>${esc(e)}</code></pre>
-            <p><a href="/blog/">← Вернуться в блог</a></p>
-          </div>`;
+      try { raw = await loadText(mdUrl); }
+      catch (e) {
+        POST.innerHTML = `<div class="post-content"><p><strong>Не удалось загрузить файл:</strong> ${esc(mdUrl)}</p><pre><code>${esc(e)}</code></pre><p><a href="/blog/">← Вернуться в блог</a></p></div>`;
         return;
       }
 
-      let meta = {};
-      let body = raw;
+      let meta = {}, body = raw;
       if (raw.startsWith('---')) {
         const end = raw.indexOf('\n---', 3);
         if (end > -1) {
@@ -414,15 +352,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       const coverFM = meta.cover || '';
       const coverFinal = coverFM || cover;
 
-      const titleEl = document.getElementById('postTitle');
-      if (titleEl) titleEl.textContent = title;
+      const titleEl = document.getElementById('postTitle'); if (titleEl) titleEl.textContent = title;
       document.title = `${title} — DigiSheets`;
 
       const metaEl = document.getElementById('postMeta');
       if (metaEl) metaEl.textContent = `${date ? fmtDate(date) : ''}${(Array.isArray(meta.tags) ? meta.tags : tags).length ? ' • ' + (meta.tags || tags).join(', ') : ''}`;
 
-      const mdDesc = document.getElementById('metaDesc');
-      if (mdDesc) mdDesc.setAttribute('content', description);
+      const mdDesc = document.getElementById('metaDesc'); if (mdDesc) mdDesc.setAttribute('content', description);
 
       let og = document.querySelector('meta[property="og:image"]');
       if (!og) { og = document.createElement('meta'); og.setAttribute('property','og:image'); document.head.appendChild(og); }
@@ -452,7 +388,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       try { if (window.hljs) document.querySelectorAll('pre code').forEach(b => window.hljs.highlightElement(b)); } catch {}
     }
 
-    // «Живая» статистика для статьи
+    // Живые счётчики
     initStatsSingle(slug, { pollMs: 10000, viewElId: 'viewCount', likeBtnId: 'likeBtn', likeCountElId: 'likeCount' });
   }
 });
