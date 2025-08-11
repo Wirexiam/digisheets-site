@@ -1,0 +1,6 @@
+# Robots.txt for DigiSheets
+User-agent: *
+Disallow:
+
+Sitemap: https://digisheets.ru/sitemap.xml
+Host: digisheets.ru

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DigiUp — партнёр DigiSheets</title>
+  <meta name="description" content="Как DigiUp использует DigiSheets в своей работе — кейс партнёрства." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <!-- общий хедер -->
+  <header class="header">
+    <div class="container header__inner">
+      <a class="logo" href="/#hero">DigiSheets</a>
+      <nav class="nav">
+        <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <ul id="navList" class="nav-list">
+          <li><a class="nav-link" href="/#features">Возможности</a></li>
+          <li><a class="nav-link" href="/#walkthrough">Быстрый запуск</a></li>
+          <li><a class="nav-link" href="/#cases">Кейсы</a></li>
+          <li><a class="nav-link" href="/#guide">Гайд</a></li>
+          <li><a class="nav-link" href="/#faq">FAQ</a></li>
+          <li><a class="nav-link" href="/#partners">Партнёры</a></li>
+          <li><a class="nav-link" href="/blog/">Блог</a></li>ы
+          <li><a class="btn primary" target="_blank" rel="noopener"
+            href="https://script.google.com/macros/s/AKfycbwUhLtIB5H9LjEGhBLCdTEyYNn6oDTI3xm5yPKCYyixNEa676JOIvt_gJQp3TRwNGibMw/exec">Создать таблицу</a></li>
+          <li><button id="themeToggle" class="btn ghost" type="button">🌙 Тёмная</button></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="section partner-hero">
+      <div class="container partner-hero__grid">
+        <div class="partner-hero__brand">
+          <img class="partner-hero__logo" src="/assets/digiup.jpg" alt="DigiUp" width="96" height="96">
+          <div>
+            <h1 class="partner-hero__title">Наш партнёр — DigiUp</h1>
+            <p class="partner-hero__tag">Маркетинговая платформа и технологический партнёр</p>
+          </div>
+        </div>
+        <div class="partner-hero__cta">
+          <a class="btn secondary" href="/#partners">← К партнёрам</a>
+          <a class="btn primary" href="https://digiup.ru" target="_blank" rel="noopener">Перейти на сайт</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- О партнёре -->
+    <section class="section partner-about">
+      <div class="container partner-card">
+        <div class="partner-about__text">
+          <h2 class="section-title" style="text-align:left">Кто такие DigiUp?</h2>
+          <p><strong>DigiUp</strong> — образовательная и медийная платформа в области маркетинга, AI и цифровых инструментов. Помогают маркетологам и предпринимателям осваивать инструменты, проводят курсы и вебинары, создают Telegram-ботов и автоматизируют процессы.</p>
+          <ul class="partner-bullets">
+            <li>Автоматизация контент-процессов</li>
+            <li>AI-инструменты и боты</li>
+            <li>Обучение и коммьюнити</li>
+          </ul>
+        </div>
+        <aside class="partner-stats">
+          <div class="stat"><div class="stat__num">3–4×</div><div class="stat__label">быстрее сбор ТЗ</div></div>
+          <div class="stat"><div class="stat__num">+100</div><div class="stat__label">карточек/нед.</div></div>
+          <div class="stat"><div class="stat__num">24/7</div><div class="stat__label">уведомления в Telegram</div></div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Что внедрили -->
+    <section class="section partner-what">
+      <div class="container">
+        <h2 class="section-title">Как DigiUp использует DigiSheets</h2>
+        <div class="partner-features">
+          <article class="feature-card">
+            <h3 class="feature-title">Автоматическая генерация ТЗ</h3>
+            <p class="feature-text">Сбор ТЗ по шаблонам → Google Docs → отправка ссылок команде и заказчикам.</p>
+          </article>
+          <article class="feature-card">
+            <h3 class="feature-title">Карточки товаров</h3>
+            <p class="feature-text">Массовая генерация описаний прямо из таблицы: заголовки, плюсы, SEO-блок.</p>
+          </article>
+          <article class="feature-card">
+            <h3 class="feature-title">Уведомления авторам</h3>
+            <p class="feature-text">Все ключевые действия приходят в Telegram. Роли и доступы — тоже через бота.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Проекты (слайдер на твоём ванильном коде) -->
+    <section class="section partner-projects">
+      <div class="container">
+        <h2 class="section-title">Проекты DigiUp</h2>
+
+        <div class="wt-slider partner-slider" aria-label="Примеры проектов">
+          <button class="wt-nav wt-prev" type="button" aria-label="Предыдущий">←</button>
+          <div class="wt-viewport" tabindex="0">
+            <div class="wt-track">
+              <figure class="wt-slide" data-caption="Медийная AI-платформа, вдохновитель DigiSheets">
+                <div class="swiper-card">
+                  <img class="swiper-logo" src="/partners/2.jpg" alt="DigiUp" width="960" height="540" loading="lazy">
+                  <h3>DigiUp</h3>
+                  <p>Медийная AI-платформа и партнёр по развитию нейроинфраструктуры.</p>
+                  <a href="https://digiup.ru/" target="_blank">Открыть сайт</a>
+                </div>
+              </figure>
+              <figure class="wt-slide" data-caption="Агентство полного цикла с DigiSheets">
+                <div class="swiper-card">
+                  <img class="swiper-logo" src="/partners/1.jpg" alt="РА Ковалёвы" width="960" height="540" loading="lazy">
+                  <h3>РА Ковалёвы</h3>
+                  <p>Внедрили DigiSheets для SEO, копирайтинга и автоматизации контента.</p>
+                  <a href="https://d-kovalev.ru/" target="_blank">Открыть сайт</a>
+                </div>
+              </figure>
+              <figure class="wt-slide" data-caption="Экосистема To-Can + DigiSheets">
+                <div class="swiper-card">
+                  <img class="swiper-logo" src="/partners/3.jpg" alt="CRM To-Can" width="960" height="540" loading="lazy">
+                  <h3>CRM To-Can</h3>
+                  <p>AI-CRM: задачи, уведомления, аналитика — вместе с DigiSheets.</p>
+                  <a href="https://to-can.ru/" target="_blank">Открыть сайт</a>
+                </div>
+              </figure>
+            </div>
+          </div>
+          <button class="wt-nav wt-next" type="button" aria-label="Следующий">→</button>
+        </div>
+
+        <div class="wt-caption" id="partnerCaption"></div>
+        <div class="wt-counter" id="partnerCounter">1 / 3</div>
+      </div>
+    </section>
+
+    <!-- Медиа-ссылки -->
+    <section class="section partner-links">
+      <div class="container partner-card">
+        <h2 class="section-title" style="text-align:left">DigiUp в медиа</h2>
+        <ul class="partner-bullets">
+          <li><a class="link-underline" href="https://digiup.ru/" target="_blank" rel="noopener">Главный сайт DigiUp</a></li>
+          <li><a class="link-underline" href="https://t.me/DiGi_Up" target="_blank" rel="noopener">Telegram-канал с кейсами</a></li>
+          <li><a class="link-underline" href="https://vc.ru/id428903" target="_blank" rel="noopener">Страница CEO на VC.ru</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section partner-bottom-cta">
+      <div class="container cta-inline">
+        <h3>Хотите внедрить DigiSheets под ваш процесс?</h3>
+        <div class="cta-actions">
+          <a class="btn secondary" href="/#cases">Смотреть кейсы</a>
+          <a class="btn primary" href="https://t.me/Danyshes" target="_blank" rel="noopener">Связаться</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- общий футер -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <a class="logo" href="/#hero">DigiSheets</a>
+        <p>AI-инструменты для контент-команд на базе Google Таблиц.</p>
+      </div>
+      <nav class="footer__nav" aria-label="Продукт">
+        <strong>Продукт</strong>
+        <a href="/#features">Возможности</a>
+        <a href="/#walkthrough">Быстрый запуск</a>
+        <a href="/#cases">Кейсы</a>
+        <a href="/#guide">Гайд</a>
+      </nav>
+      <nav class="footer__nav" aria-label="Материалы">
+        <strong>Материалы</strong>
+        <a href="/#faq">FAQ</a>
+        <a href="/privacy-policy.html">Политика конфиденциальности</a>
+        <a href="/#partners">Партнёры</a>
+      </nav>
+    </div>
+    <div class="footer__bottom"><div class="container">© DigiSheets, 2025</div></div>
+  </footer>
+
+  <script src="/main.js" defer></script>
+  <script>
+(function(){
+  const root = document.querySelector('.partner-slider');
+  if (!root) return;
+
+  const track   = root.querySelector('.wt-track');
+  const slides  = Array.from(root.querySelectorAll('.wt-slide'));
+  const prevBtn = root.querySelector('.wt-prev');
+  const nextBtn = root.querySelector('.wt-next');
+  const caption = document.getElementById('partnerCaption');
+  const counter = document.getElementById('partnerCounter');
+  const viewport = root.querySelector('.wt-viewport');
+
+  let index = 0;
+
+  function update(){
+    track.style.transform = `translateX(${-index * 100}%)`;
+    if (caption) caption.textContent = slides[index].dataset.caption || '';
+    if (counter) counter.textContent = `${index + 1} / ${slides.length}`;
+  }
+
+  function go(delta){
+    index = (index + delta + slides.length) % slides.length;
+    update();
+  }
+
+  prevBtn?.addEventListener('click', () => go(-1));
+  nextBtn?.addEventListener('click', () => go(+1));
+
+  // клавиатура (когда фокус во вьюпорте)
+  viewport?.addEventListener('keydown', (e)=>{
+    if (e.key === 'ArrowRight') go(+1);
+    if (e.key === 'ArrowLeft')  go(-1);
+  });
+
+  // свайпы
+  let sx = 0, dx = 0, drag = false;
+  viewport?.addEventListener('touchstart', e => { drag = true; sx = e.touches[0].clientX; dx = 0; }, {passive:true});
+  viewport?.addEventListener('touchmove',  e => { if(!drag) return; dx = e.touches[0].clientX - sx; }, {passive:true});
+  viewport?.addEventListener('touchend',   () => {
+    if (!drag) return; drag = false;
+    if (Math.abs(dx) > 40) go(dx < 0 ? +1 : -1);
+  });
+
+  // на всякий случай пересчёт при ресайзе (оставляет текущий слайд)
+  window.addEventListener('resize', update);
+
+  // старт
+  update();
+})();
+</script>
+</body>
+</html>

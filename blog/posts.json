@@ -1,0 +1,20 @@
+[
+  {
+    "slug": "neyroseti-i-trendy-v-2025-godu",
+    "title": "Нейросети и тренды в 2025 году",
+    "description": "Главные направления развития ИИ в 2025: мультиагентные системы, гибридные модели, генеративные интерфейсы и регулирование.",
+    "date": "2025-08-11",
+    "tags": ["ИИ", "Тренды"],
+    "cover": "/assets/posts/neyroseti_i_trendy_v_2025_godu.png",
+    "md": "posts/neyroseti_i_trendy_v_2025_godu.md"
+  },
+  {
+    "slug": "razvitie-neyrosetey-ot-pervykh-eksperimentov-do-ii-budushchego",
+    "title": "Развитие нейросетей: от первых экспериментов до ИИ будущего",
+    "description": "История, ключевые технологии и прогноз развития нейросетей до 2030 года.",
+    "date": "2025-08-11",
+    "tags": ["ИИ", "История", "Будущее"],
+    "cover": "/assets/posts/razvitie_neyrosetey_ot_pervykh_eksperimentov_do_ii_budushchego.png",
+    "md": "posts/razvitie-neyrosetey-ot-pervykh-eksperimentov-do-ii-budushchego.md"
+  }
+]

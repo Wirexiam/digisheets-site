@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title id="docTitle">Пост — DigiSheets</title>
+  <meta id="metaDesc" name="description" content="">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/blog/blog.css">
+  <!-- Подсветка кода -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+  <!-- Шапка как на главной -->
+  <header class="header">
+    <div class="container header__inner">
+      <a class="logo" href="/#hero">DigiSheets</a>
+      <nav class="nav">
+        <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <ul id="navList" class="nav-list">
+          <li><a class="nav-link" href="#features">Возможности</a></li>
+          <li><a class="nav-link" href="#walkthrough">Быстрый запуск</a></li>
+          <li><a class="nav-link" href="#cases">Кейсы</a></li>
+          <li><a class="nav-link" href="#guide">Гайд</a></li>
+          <li><a class="nav-link" href="#testimonials">Отзывы</a></li>
+          <li><a class="nav-link" href="#custom">Внедрение</a></li>
+          <li><a class="nav-link" href="#faq">FAQ</a></li>
+          <li><a class="nav-link" href="#partners">Партнёры</a></li>
+          <li><a class="nav-link" href="/blog/">Блог</a></li>
+          <li><a class="btn primary" target="_blank" rel="noopener"
+                 href="https://script.google.com/macros/s/AKfycbwUhLtIB5H9LjEGhBLCdTEyYNn6oDTI3xm5yPKCYyixNEa676JOIvt_gJQp3TRwNGibMw/exec">Создать таблицу</a></li>
+          <li><button id="themeToggle" class="btn ghost" type="button">🌙 Тёмная</button></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <article class="container" style="max-width:800px">
+      <p><a class="btn secondary" href="/blog/">← Ко всем статьям</a></p>
+      <h1 id="postTitle" style="margin:12px 0"></h1>
+        <p id="postMeta" style="color:var(--muted);margin-bottom:10px"></p>
+
+        <div id="postContent" class="post-content"></div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__bottom">© DigiSheets, <span id="year"></span></div>
+  </footer>
+
+  <script src="/main.js"></script>
+
+  <!-- Markdown-it + Highlight.js (CDN) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/14.1.0/markdown-it.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+  <!-- Наш блог-скрипт -->
+  <script src="/blog/blog.js"></script>
+  <script>document.getElementById('year').textContent=new Date().getFullYear()</script>
+</body>
+</html>

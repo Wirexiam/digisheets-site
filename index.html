@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DigiSheets — AI в Google Таблицах</title>
+  <meta name="description" content="DigiSheets автоматизирует создание ТЗ, карточек и работу команд в Google Таблицах с поддержкой Telegram-бота." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" type="image/png" href="/favi.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Шапка -->
+  <header class="header" role="banner">
+    <div class="container header__inner">
+      <a class="logo" href="#hero" data-no-translate aria-label="DigiSheets — на главную">DigiSheets</a>
+
+      <nav class="nav" role="navigation" aria-label="Основная навигация">
+        <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+        <ul id="navList" class="nav-list">
+          <li><a class="nav-link" href="#features">Возможности</a></li>
+          <li><a class="nav-link" href="#walkthrough">Быстрый запуск</a></li>
+          <li><a class="nav-link" href="#cases">Кейсы</a></li>
+          <li><a class="nav-link" href="#guide">Гайд</a></li>
+          <li><a class="nav-link" href="#testimonials">Отзывы</a></li>
+          <li><a class="nav-link" href="#custom">Внедрение</a></li>
+          <li><a class="nav-link" href="#faq">FAQ</a></li>
+          <li><a class="nav-link" href="#partners">Партнёры</a></li>
+          <li><a class="nav-link" href="/blog/">Блог</a></li>
+          <li>
+            <a class="btn primary" target="_blank" rel="noopener"
+               href="https://script.google.com/macros/s/AKfycbwUhLtIB5H9LjEGhBLCdTEyYNn6oDTI3xm5yPKCYyixNEa676JOIvt_gJQp3TRwNGibMw/exec">
+              Создать таблицу
+            </a>
+          </li>
+          <li>
+            <button id="themeToggle" class="btn ghost" type="button" aria-label="Переключить тему">🌙 Тёмная</button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Контентные секции подключим следующими порциями -->
+  <main>
+    <section id="hero" class="section hero">
+  <div class="container hero__grid">
+    <div class="hero__content">
+      <h1 class="hero__title">Генерируйте контент в Google&nbsp;Таблицах с&nbsp;помощью AI</h1>
+      <p class="hero__subtitle">
+        DigiSheets автоматизирует создание ТЗ, карточек товаров и работу команды — без кода и с Telegram-ботом.
+      </p>
+
+      <div class="hero__cta">
+        <a class="btn primary" target="_blank" rel="noopener"
+           href="https://script.google.com/macros/s/AKfycbwUhLtIB5H9LjEGhBLCdTEyYNn6oDTI3xm5yPKCYyixNEa676JOIvt_gJQp3TRwNGibMw/exec">🚀 Создать таблицу</a>
+        <a class="btn secondary" target="_blank" rel="noopener"
+           href="https://docs.google.com/spreadsheets/d/1NF7tpdKRy6JKa4SQoiDFPa_s7YXNKHhWdi_UHXPriWQ/edit?usp=sharing">Пример таблицы</a>
+      </div>
+
+      <ul class="hero__bullets" aria-label="Преимущества">
+        <li>Автосбор ТЗ и карточек</li>
+        <li>Команды и роли в Telegram</li>
+        <li>Логи действий и уведомления</li>
+      </ul>
+    </div>
+
+    <div class="hero__media" aria-hidden="true">
+      <div class="fan">
+        <img src="assets/screen5.webp" alt="Шаг 5 — авторизация"   loading="lazy"  width="520" height="320">
+        <img src="assets/screen4.webp" alt="Шаг 4 — начать работу" loading="lazy"  width="520" height="320">
+        <img src="assets/front.jpg" alt="Шаг 5 — авторизация"   loading="lazy"  width="520" height="320">
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="features" class="section features">
+  <div class="container">
+    <h2 class="section-title">Почему <span class="accent">DigiSheets</span>?</h2>
+    <div class="features__grid">
+      <article class="feature-card">
+        <div class="feature-icon">📝</div>
+        <h3 class="feature-title">Автоматические ТЗ</h3>
+        <p class="feature-text">
+          Генерация технических заданий по шаблону — мгновенно, точно, без ручного труда.
+        </p>
+      </article>
+      <article class="feature-card">
+        <div class="feature-icon">📦</div>
+        <h3 class="feature-title">Карточки товаров</h3>
+        <p class="feature-text">
+          Описания для маркетплейсов прямо в Google Таблицах с AI-формулами.
+        </p>
+      </article>
+      <article class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <h3 class="feature-title">Telegram-бот</h3>
+        <p class="feature-text">
+          Управление проектами и уведомления — прямо из Telegram без открытия таблиц.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+    <section id="walkthrough" class="section walkthrough">
+  <div class="container">
+    <h2 class="section-title">Как запуститься за 30 секунд</h2>
+
+    <div class="wt-slider" aria-label="Пошаговый запуск">
+      <button class="wt-nav wt-prev" type="button" aria-label="Предыдущий шаг">←</button>
+
+      <div class="wt-viewport" tabindex="0">
+        <div class="wt-track">
+          <figure class="wt-slide" data-caption="1. Сгенерируйте таблицу и нажмите «Перейти в бота»">
+            <img src="assets/screen1.webp" width="960" height="540" loading="lazy" alt="Шаг 1">
+          </figure>
+          <figure class="wt-slide" data-caption="2. Напишите боту «Владелец», если вы создатель проекта">
+            <img src="assets/screen2.webp" width="960" height="540" loading="lazy" alt="Шаг 2">
+          </figure>
+          <figure class="wt-slide" data-caption="3. Перейдите в таблицу">
+            <img src="assets/screen3.webp" width="960" height="540" loading="lazy" alt="Шаг 3">
+          </figure>
+          <figure class="wt-slide" data-caption="4. Нажмите «Начать работу»">
+            <img src="assets/screen4.webp" width="960" height="540" loading="lazy" alt="Шаг 4">
+          </figure>
+          <figure class="wt-slide" data-caption="5. Подтвердите авторизацию">
+            <img src="assets/screen5.webp" width="960" height="540" loading="lazy" alt="Шаг 5">
+          </figure>
+          <figure class="wt-slide" data-caption="6. Перейдите на нужную страницу">
+            <img src="assets/screen6.webp" width="960" height="540" loading="lazy" alt="Шаг 6">
+          </figure>
+          <figure class="wt-slide" data-caption="7. Выберите пользователя">
+            <img src="assets/screen7.webp" width="960" height="540" loading="lazy" alt="Шаг 7">
+          </figure>
+          <figure class="wt-slide" data-caption="8. Выдайте разрешения и нажмите «Продолжить»">
+            <img src="assets/screen8.webp" width="960" height="540" loading="lazy" alt="Шаг 8">
+          </figure>
+          <figure class="wt-slide" data-caption="9. Можете начинать нанимать сотрудников">
+            <img src="assets/screen9.webp" width="960" height="540" loading="lazy" alt="Шаг 9">
+          </figure>
+        </div>
+      </div>
+
+      <button class="wt-nav wt-next" type="button" aria-label="Следующий шаг">→</button>
+    </div>
+
+    <div class="wt-caption" id="wtCaption" aria-live="polite"></div>
+    <div class="wt-counter" id="wtCounter">1 / 9</div>
+  </div>
+</section>
+
+
+<section id="cases" class="section cases">
+  <div class="container">
+    <h2 class="section-title">Как используют DigiSheets</h2>
+    <div class="cases__grid">
+      
+      <!-- КЕЙС 1 -->
+      <article class="case-card" tabindex="0">
+        <div class="case-card__inner">
+          <!-- FRONT -->
+          <div class="case-face case-front">
+            <div class="case-front__head">
+              <img class="case-logo" src="assets/digiup.jpg" alt="Digi Up" width="48" height="48" loading="lazy">
+              <h3 class="case-title">Digi Up</h3>
+            </div>
+            <p class="case-desc">
+              Автоматизировали создание технических заданий и сделали уведомления удобнее.
+            </p>
+            <div class="case-actions">
+              <a class="btn primary btn-small" href="https://digiup.ru/" target="_blank" rel="noopener">На сайт</a>
+              <button class="btn linklike btn-small case-more" type="button">Подробнее</button>
+            </div>
+          </div>
+
+          <!-- BACK -->
+          <div class="case-face case-back" aria-hidden="true">
+            <div class="case-back__center">
+              <h3 class="case-back-title">Digi Up — результат</h3>
+              <ul class="case-points">
+                <li>Управление проектами через Telegram и Google Таблицы.</li>
+                <li>x3 к скорости сдачи проектов.</li>
+                <li>Никакой рутины.</li>
+              </ul>
+            </div>
+            <button class="btn ghost btn-small case-back-btn" type="button">Назад</button>
+          </div>
+        </div>
+      </article>
+
+
+      <!-- КЕЙС 2 -->
+      <article class="case-card" tabindex="0">
+        <div class="case-card__inner">
+          <!-- FRONT -->
+          <div class="case-face case-front">
+            <div class="case-front__head">
+              <img class="case-logo" src="icons/bot.svg" alt="Digi Up" width="48" height="48" loading="lazy">
+              <h3 class="case-title">Ваше агентство</h3>
+            </div>
+            <p class="case-desc">
+              Внедрили DigiSheets в процесс и ускорили запуск контента.
+            </p>
+            <div class="case-actions">
+              <a class="btn primary btn-small" href="https://digisheets.ru/" target="_blank" rel="noopener">На сайт</a>
+              <button class="btn linklike btn-small case-more" type="button">Подробнее</button>
+            </div>
+          </div>
+
+          <!-- BACK -->
+          <div class="case-face case-back" aria-hidden="true">
+            <div class="case-back__center">
+              <h3 class="case-back-title">Ваши результаты</h3>
+              <ul class="case-points">
+                <li>Сбор ТЗ в 3–4 раза быстрее.</li>
+                <li>Уведомления авторам через Telegram.</li>
+                <li>Массовая генерация карточек в таблицах.</li>
+                <li>AI-функции нового поколения прямо в боте.</li>
+              </ul>
+            </div>
+            <button class="btn ghost btn-small case-back-btn" type="button">Назад</button>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+    <section id="guide" class="section guide">
+  <div class="container">
+    <h2 class="section-title">Гайд</h2>
+
+    <!-- Вкладки -->
+    <div class="guide-tabs" role="tablist" aria-label="Разделы гайда">
+      <button class="guide-tab is-active" role="tab" aria-selected="true" aria-controls="panel-start" id="tab-start">Начать</button>
+      <button class="guide-tab" role="tab" aria-selected="false" aria-controls="panel-bot" id="tab-bot">Бот</button>
+      <button class="guide-tab" role="tab" aria-selected="false" aria-controls="panel-team" id="tab-team">Команда</button>
+      <button class="guide-tab" role="tab" aria-selected="false" aria-controls="panel-table" id="tab-table">Работа в таблице</button>
+      <button class="guide-tab" role="tab" aria-selected="false" aria-controls="panel-gen" id="tab-gen">Генерация</button>
+      <button class="guide-tab" role="tab" aria-selected="false" aria-controls="panel-notif" id="tab-notif">Уведомления</button>
+      <button class="guide-tab" role="tab" aria-selected="false" aria-controls="panel-support" id="tab-support">Поддержка</button>
+    </div>
+
+    <!-- Панели -->
+    <div class="guide-panels">
+
+      <!-- START -->
+      <section class="guide-panel is-active" role="tabpanel" tabindex="0" id="panel-start" aria-labelledby="tab-start" data-count="5">
+        <div class="guide-viewport">
+          <article class="guide-card is-active">
+            <h3>1.1 Что нужно для работы?</h3>
+            <p>Перед началом получите OpenAI API Key — он необходим для генерации текстов.
+              Ключ можно получить по ссылке:
+              <a href="https://platform.openai.com/settings/organization/api-keys" target="_blank" rel="noopener">platform.openai.com</a>.
+              Также понадобится адрес электронной почты.
+            </p>
+          </article>
+
+          <article class="guide-card">
+            <h3>1.2 Создание стартовой таблицы</h3>
+            <p>На главной странице расширения введите: название проекта (например: «Маркетинг весна 2025»),
+              OpenAI API Key и ваш email. Нажмите «Создать таблицу». Через 2–3 минуты появится ссылка и Telegram-бот.
+            </p>
+          </article>
+
+          <article class="guide-card">
+            <h3>1.3 Начало работы с таблицей</h3>
+            <p>После загрузки меню нажмите: <code>GPT Tools → Начать работу</code>.
+              Предоставьте скрипту все необходимые права.
+            </p>
+          </article>
+
+          <article class="guide-card">
+            <h3>1.4 Кто такой Владелец?</h3>
+            <p>Создатель таблицы выбирает роль Владелец. Он управляет участниками, назначает роли, удаляет проекты.</p>
+          </article>
+
+          <article class="guide-card">
+            <h3>1.5 Регистрация в Telegram-боте</h3>
+            <p>Нажмите «Перейти в бота». Введите <code>/start</code>, затем <code>/register</code>.
+              Выберите роль: Владелец, Менеджер, Автор, Заказчик. После этого получите ссылку на таблицу.
+            </p>
+          </article>
+        </div>
+
+        <div class="guide-controls">
+          <button class="guide-prev" type="button" aria-label="Предыдущий шаг">←</button>
+          <span class="guide-counter">1 / 5</span>
+          <button class="guide-next" type="button" aria-label="Следующий шаг">→</button>
+        </div>
+      </section>
+
+      <!-- BOT -->
+      <section class="guide-panel" role="tabpanel" tabindex="0" id="panel-bot" aria-labelledby="tab-bot" data-count="1">
+        <div class="guide-viewport">
+          <article class="guide-card is-active">
+            <h3>1.6 Как работает бот?</h3>
+            <p>Telegram-бот <strong>@digigpt_bot</strong> выполняет три задачи:</p>
+            <ul>
+              <li>Присылает уведомления при генерации ТЗ и карточек.</li>
+              <li>Управляет участниками проекта.</li>
+              <li>Принимает команды: <code>/add</code>, <code>/team</code>, <code>/my</code> и другие.</li>
+            </ul>
+            <p><strong>Важно:</strong> бот должен быть разблокирован, иначе уведомления не придут.</p>
+          </article>
+        </div>
+
+        <div class="guide-controls">
+          <button class="guide-prev" type="button" aria-label="Предыдущий шаг">←</button>
+          <span class="guide-counter">1 / 1</span>
+          <button class="guide-next" type="button" aria-label="Следующий шаг">→</button>
+        </div>
+      </section>
+
+      <!-- TEAM -->
+      <section class="guide-panel" role="tabpanel" tabindex="0" id="panel-team" aria-labelledby="tab-team" data-count="6">
+        <div class="guide-viewport">
+          <article class="guide-card is-active">
+            <h3>2.0 Как пригласить участника?</h3>
+            <p>Владелец может пригласить сотрудника командой:
+              <code>/add НазваниеПроекта @username Роль</code>.
+              Бот отправит приглашение. Если сотрудник не регистрировался — его попросят ввести
+              <code>/register</code>, имя и email.
+            </p>
+          </article>
+
+          <article class="guide-card">
+            <h3>2.2 Как пригласить повторно?</h3>
+            <p>Если сотрудник уже зарегистрирован в одном из проектов, его не просят заново вводить имя и почту.
+              Он просто подтверждает участие сообщением «Да».
+            </p>
+          </article>
+
+          <article class="guide-card">
+            <h3>2.3 Как посмотреть участников проекта?</h3>
+            <p>Команда: <code>/team НазваниеПроекта</code> — покажет всех сотрудников и их роли.</p>
+          </article>
+
+          <article class="guide-card">
+            <h3>2.4 Как посмотреть свои проекты?</h3>
+            <p>Команда: <code>/my</code> — показывает проекты, вашу роль и токены подключения.</p>
+          </article>
+
+          <article class="guide-card">
+            <h3>2.5 Как удалить участника?</h3>
+            <p>Команда: <code>/del НазваниеПроекта @username</code> — удаляет пользователя и отключает уведомления
+              (с предварительным уведомлением).
+            </p>
+          </article>
+
+          <article class="guide-card">
+            <h3>2.6 Как удалить проект?</h3>
+            <p>Команда: <code>/pdel НазваниеПроекта</code> — удаляет проект из реестра,
+              отписывает всех участников и делает таблицу неактивной.
+            </p>
+          </article>
+        </div>
+
+        <div class="guide-controls">
+          <button class="guide-prev" type="button" aria-label="Предыдущий шаг">←</button>
+          <span class="guide-counter">1 / 6</span>
+          <button class="guide-next" type="button" aria-label="Следующий шаг">→</button>
+        </div>
+      </section>
+
+      <!-- TABLE -->
+      <section class="guide-panel" role="tabpanel" tabindex="0" id="panel-table" aria-labelledby="tab-table" data-count="4">
+        <div class="guide-viewport">
+          <article class="guide-card is-active">
+            <h3>3.1 Как собрать Техническое Задание?</h3>
+            <p>На листе «Конструктор ТЗ» в меню нажмите: <code>GPT Tools → Собрать ТЗ</code>.
+              Бот соберёт блоки в Google Документ и отправит ссылку в Telegram всем участникам.
+            </p>
+          </article>
+
+          <article class="guide-card">
+            <h3>3.2 Как создать карточки товаров?</h3>
+            <p>Перейдите на лист «Карточки товаров» и нажмите:
+              <code>GPT Tools → Генерация карточек + файл</code>.
+              Каждая строка превратится в карточку с описанием и ссылкой на документ. Бот уведомит участников.
+            </p>
+          </article>
+
+          <article class="guide-card">
+            <h3>3.3 Что такое TelegramUsers?</h3>
+            <p>Обязательная страница со списком участников и их ролей. Позволяет контролировать состав команды
+              и статус регистрации.
+            </p>
+          </article>
+
+          <article class="guide-card">
+            <h3>3.4 Что такое Logs?</h3>
+            <p>Страница с журналом действий. Помогает разбирать причины багов. Для техподдержки достаточно прислать
+              копию этого листа.
+            </p>
+          </article>
+        </div>
+
+        <div class="guide-controls">
+          <button class="guide-prev" type="button" aria-label="Предыдущий шаг">←</button>
+          <span class="guide-counter">1 / 4</span>
+          <button class="guide-next" type="button" aria-label="Следующий шаг">→</button>
+        </div>
+      </section>
+
+      <!-- GEN -->
+      <section class="guide-panel" role="tabpanel" tabindex="0" id="panel-gen" aria-labelledby="tab-gen" data-count="3">
+        <div class="guide-viewport">
+          <article class="guide-card is-active">
+            <h3>4.1 Формула <code>=GEN()</code></h3>
+            <p><strong>Формат:</strong> <code>=GEN(промт; ввод)</code>.
+              Для небольших блоков текста (заголовки, описания по шаблону).
+              <strong>Пример:</strong> <code>=GEN(B2; C2;)</code>.
+            </p>
+          </article>
+
+          <article class="guide-card">
+            <h3>4.2 Формула <code>=CREATE()</code></h3>
+            <p><strong>Формат:</strong> <code>=CREATE(общий_промт; инструкция; тема)</code>.
+              Для развёрнутых инструкций и многоуровневого контента. В инструкции можно использовать
+              <code>%input%</code> — он подставится темой.
+              <strong>Пример:</strong> <code>=CREATE("Создай текст"; "Опиши %input% для лендинга"; "умные весы")</code>.
+            </p>
+          </article>
+
+          <article class="guide-card">
+            <h3>4.3 Формула <code>=TZ()</code></h3>
+            <p><strong>Формат:</strong> <code>=TZ(промт; этап;)</code>.
+              Специально для конструктора ТЗ: учитывает общий контекст и этап генерации.
+            </p>
+          </article>
+        </div>
+
+        <div class="guide-controls">
+          <button class="guide-prev" type="button" aria-label="Предыдущий шаг">←</button>
+          <span class="guide-counter">1 / 3</span>
+          <button class="guide-next" type="button" aria-label="Следующий шаг">→</button>
+        </div>
+      </section>
+
+      <!-- NOTIF -->
+      <section class="guide-panel" role="tabpanel" tabindex="0" id="panel-notif" aria-labelledby="tab-notif" data-count="3">
+        <div class="guide-viewport">
+          <article class="guide-card is-active">
+            <h3>5.1 Какие события бот сообщает?</h3>
+            <p>Уведомления приходят, когда собрано ТЗ, сгенерированы карточки, либо кто-то принял приглашение в проект.</p>
+          </article>
+
+          <article class="guide-card">
+            <h3>5.2 Кому приходят уведомления?</h3>
+            <p>Только тем, кто зарегистрирован в проекте и не отписался вручную. Регистрация обязательна.</p>
+          </article>
+
+          <article class="guide-card">
+            <h3>5.3 Есть ли разделение уведомлений?</h3>
+            <p>Да. Руководитель и сотрудник получают события о вступлении/удалении. Все участники — о генерации ТЗ и карточек.</p>
+          </article>
+        </div>
+
+        <div class="guide-controls">
+          <button class="guide-prev" type="button" aria-label="Предыдущий шаг">←</button>
+          <span class="guide-counter">1 / 3</span>
+          <button class="guide-next" type="button" aria-label="Следующий шаг">→</button>
+        </div>
+      </section>
+
+      <!-- SUPPORT -->
+      <section class="guide-panel" role="tabpanel" tabindex="0" id="panel-support" aria-labelledby="tab-support" data-count="1">
+        <div class="guide-viewport">
+          <article class="guide-card is-active">
+            <h3>6.1 Куда обращаться при ошибках?</h3>
+            <p>Команды в Telegram: <code>/offer</code> — бизнес-предложения, <code>/support</code> — техподдержка.
+              Или напишите напрямую: <a href="https://t.me/Danyshes" target="_blank" rel="noopener">@Danyshes</a>.
+            </p>
+          </article>
+        </div>
+
+        <div class="guide-controls">
+          <button class="guide-prev" type="button" aria-label="Предыдущий шаг">←</button>
+          <span class="guide-counter">1 / 1</span>
+          <button class="guide-next" type="button" aria-label="Следующий шаг">→</button>
+        </div>
+      </section>
+    </div>
+  </div>
+</section>
+
+
+    <section id="testimonials" class="section testimonials" aria-label="Отзывы">
+  <div class="container">
+    <h2 class="section-title">Отзывы</h2>
+
+    <div class="ts-slider" role="region" aria-roledescription="слайдер отзывов" aria-label="Слайдер отзывов">
+      <button class="ts-nav ts-prev" type="button" aria-label="Предыдущий отзыв">←</button>
+
+      <div class="ts-viewport" tabindex="0" aria-live="polite" aria-atomic="true">
+        <div class="ts-track">
+          <!-- Отзыв 1 -->
+          <figure class="ts-card is-active">
+            <blockquote class="ts-quote">
+              «DigiSheets разгрузил проект-менеджера. Команда перестала ждать согласования — уведомления приходят сразу в Telegram».
+            </blockquote>
+            <figcaption class="ts-person">
+              <img class="ts-avatar" src="assets/roman.jpg" width="56" height="56" alt="Digi Up">
+              <div class="ts-meta">
+                <div class="ts-name">Роман Ковалёв</div>
+                <div class="ts-role">Руководитель, Digi Up</div>
+              </div>
+            </figcaption>
+            <a class="ts-link" href="https://digiup.ru/" target="_blank" rel="noopener" aria-label="Открыть сайт Digi Up">digiup.ru</a>
+          </figure>
+
+          <!-- Отзыв 2 -->
+          <figure class="ts-card">
+            <blockquote class="ts-quote">
+              «Сделали на основе DigiSheets кастомное решение, теперь проще генерировать и отслеживать карточки товаров и страницы категорий».
+            </blockquote>
+            <figcaption class="ts-person">
+              <img class="ts-avatar" src="assets/Dima.jpg" width="56" height="56" alt="Агентство">
+              <div class="ts-meta">
+                <div class="ts-name">Дмитрий Шемякин</div>
+                <div class="ts-role">SEO-специалист, фриланс</div>
+              </div>
+            </figcaption>
+            <span class="ts-link" aria-hidden="true">White-label внедрение</span>
+          </figure>
+
+          <!-- Отзыв 3 -->
+          <figure class="ts-card is-active">
+            <blockquote class="ts-quote">
+              «Стало проще следить за проектами, благодаря CREATE теперь генерируем уникальные идеи, а GEN помогает находить инсайты. Конструктор ТЗ очень удобен».
+            </blockquote>
+            <figcaption class="ts-person">
+              <img class="ts-avatar" src="assets/Igor.jpeg" width="56" height="56" alt="Digi Up">
+              <div class="ts-meta">
+                <div class="ts-name">Игорь Филипенко</div>
+                <div class="ts-role">Руководитель, Impact Digital Lab</div>
+              </div>
+            </figcaption>
+            <a class="ts-link" href="https://impact-dl.ru/" target="_blank" rel="noopener" aria-label="Открыть сайт IDL">impact-dl.ru</a>
+          </figure>
+        </div>
+      </div>
+
+      <button class="ts-nav ts-next" type="button" aria-label="Следующий отзыв">→</button>
+    </div>
+
+    <div class="ts-counter" id="tsCounter">1 / 3</div>
+  </div>
+</section>
+
+    <section id="custom" class="section adopt" aria-label="Внедрение">
+  <div class="container">
+    <h2 class="section-title">Внедрение <span class="accent">DigiSheets</span> в вашу команду</h2>
+
+    <!-- Этапы -->
+    <ol class="adopt-steps" aria-label="Как проходит внедрение">
+      <li class="adopt-step">
+        <div class="adopt-step__num">1</div>
+        <div class="adopt-step__body">
+          <h3>Диагностика</h3>
+          <p>Созваниваемся, разбираем, как сейчас устроена ваша работа с контентом, и определяем, где DigiSheets сэкономит вам время.</p>
+        </div>
+      </li>
+      <li class="adopt-step">
+        <div class="adopt-step__num">2</div>
+        <div class="adopt-step__body">
+          <h3>Подготовка окружения</h3>
+          <p>Создаём стартовую таблицу, подключаем API-ключ, выдаём роли в Telegram-боте, настраиваем листы.</p>
+        </div>
+      </li>
+      <li class="adopt-step">
+        <div class="adopt-step__num">3</div>
+        <div class="adopt-step__body">
+          <h3>Шаблоны и автоматизация</h3>
+          <p>Собираем шаблоны ТЗ и карточек, настраиваем формулы <code>=GEN()</code>, <code>=CREATE()</code>, <code>=TZ()</code>, включаем уведомления.</p>
+        </div>
+      </li>
+      <li class="adopt-step">
+        <div class="adopt-step__num">4</div>
+        <div class="adopt-step__body">
+          <h3>Онбординг команды</h3>
+          <p>Проводим мини-обучение, выдаём инструкции, проверяем, что роли/права и боты работают корректно.</p>
+        </div>
+      </li>
+    </ol>
+
+    <!-- Пакеты -->
+    <div class="adopt-packages" aria-label="Пакеты внедрения">
+      <!-- Start -->
+      <article class="pkg">
+        <header class="pkg__head">
+          <h3 class="pkg__title">Start</h3>
+          <div class="pkg__note">Малые команды</div>
+        </header>
+        <ul class="pkg__list">
+          <li>Стартовая таблица + подключение API</li>
+          <li>1 шаблон ТЗ и 1 шаблон карточек</li>
+          <li>Базовые уведомления в Telegram</li>
+          <li>Онбординг до 5 человек</li>
+        </ul>
+        <div class="pkg__cta">
+          <a class="btn secondary" href="https://t.me/Danyshes" target="_blank" rel="noopener">Запросить</a>
+        </div>
+      </article>
+
+      <!-- Pro (хайлайт) -->
+      <article class="pkg pkg--pro" aria-label="Рекомендуемый пакет">
+        <div class="pkg__badge" aria-hidden="true">Рекомендуем</div>
+        <header class="pkg__head">
+          <h3 class="pkg__title">Pro</h3>
+          <div class="pkg__note">Агентства и отделы</div>
+        </header>
+        <ul class="pkg__list">
+          <li>Полная настройка таблицы и бота</li>
+          <li>2–3 шаблона ТЗ + набор шаблонов карточек</li>
+          <li>Роли и права, кастомные уведомления</li>
+          <li>Онбординг до 15 человек</li>
+          <li>Сопровождение 2 недели</li>
+        </ul>
+        <div class="pkg__cta">
+          <a class="btn primary" href="https://t.me/Danyshes" target="_blank" rel="noopener">Запросить</a>
+        </div>
+      </article>
+
+      <!-- Enterprise -->
+      <article class="pkg">
+        <header class="pkg__head">
+          <h3 class="pkg__title">Enterprise</h3>
+          <div class="pkg__note">Кастом под процессы</div>
+        </header>
+        <ul class="pkg__list">
+          <li>Аудит контент-процесса и интеграции</li>
+          <li>Индивидуальные формулы и шаблоны</li>
+          <li>Расширенные лог-метрики и отчёты</li>
+          <li>Обучение команды и руководителей</li>
+          <li>Сопровождение 1 месяц</li>
+        </ul>
+        <div class="pkg__cta">
+          <a class="btn ghost" href="https://t.me/Danyshes" target="_blank" rel="noopener">Обсудить</a>
+        </div>
+      </article>
+    </div>
+
+    <!-- Примечание -->
+    <p class="adopt-note">
+      Все пакеты запускаются на базе вашей Google-организации. Доступы и ключи остаются у вас.
+    </p>
+  </div>
+</section>
+
+
+    <section id="faq" class="section faq" aria-label="Частые вопросы">
+  <div class="container">
+    <h2 class="section-title">FAQ</h2>
+
+    <div class="faq-list" role="list">
+      <!-- Q1 -->
+      <article class="faq-item" role="listitem">
+        <h3 class="faq-q" id="faq-q1">
+          <button class="faq-toggle"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="faq-a1">
+            Нужен ли OpenAI API Key для работы?
+          </button>
+        </h3>
+        <div class="faq-a" id="faq-a1" role="region" aria-labelledby="faq-q1" hidden>
+          <div class="faq-a__inner">
+            Да. Ключ используется для генерации текстов формулами <code>=GEN()</code>, <code>=CREATE()</code> и <code>=TZ()</code>.
+            Получить можно здесь:
+            <a href="https://platform.openai.com/settings/organization/api-keys" target="_blank" rel="noopener">platform.openai.com</a>.
+          </div>
+        </div>
+      </article>
+
+      <!-- Q2 -->
+      <article class="faq-item" role="listitem">
+        <h3 class="faq-q" id="faq-q2">
+          <button class="faq-toggle"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="faq-a2">
+            Как запустить DigiSheets в первый раз?
+          </button>
+        </h3>
+        <div class="faq-a" id="faq-a2" role="region" aria-labelledby="faq-q2" hidden>
+          <div class="faq-a__inner">
+            Создайте стартовую таблицу, укажите название проекта, API Key и email. В таблице запустите
+            <code>GPT Tools → Начать работу</code> и выдайте права. Ссылка на бота придёт автоматически.
+          </div>
+        </div>
+      </article>
+
+      <!-- Q3 -->
+      <article class="faq-item" role="listitem">
+        <h3 class="faq-q" id="faq-q3">
+          <button class="faq-toggle"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="faq-a3">
+            Что делают формулы =GEN(), =CREATE(), =TZ()?
+          </button>
+        </h3>
+        <div class="faq-a" id="faq-a3" role="region" aria-labelledby="faq-q3" hidden>
+          <div class="faq-a__inner">
+            <ul>
+              <li><code>=GEN()</code> — короткие блоки (заголовки, описания по шаблону).</li>
+              <li><code>=CREATE()</code> — длинные тексты с инструкцией и темой (+ <code>%input%</code> в инструкции).</li>
+              <li><code>=TZ()</code> — специальные блоки для конструктора ТЗ с учётом этапов.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- Q4 -->
+      <article class="faq-item" role="listitem">
+        <h3 class="faq-q" id="faq-q4">
+          <button class="faq-toggle"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="faq-a4">
+            Как работают роли и уведомления в Telegram?
+          </button>
+        </h3>
+        <div class="faq-a" id="faq-a4" role="region" aria-labelledby="faq-q4" hidden>
+          <div class="faq-a__inner">
+            Роли выдаёт владелец через бота. Уведомления приходят зарегистрированным участникам о сборе ТЗ,
+            генерации карточек и событиях команды. Бот должен быть разблокирован у пользователя.
+          </div>
+        </div>
+      </article>
+
+      <!-- Q5 -->
+      <article class="faq-item" role="listitem">
+        <h3 class="faq-q" id="faq-q5">
+          <button class="faq-toggle"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="faq-a5">
+            Можно ли внедрить DigiSheets под наши процессы?
+          </button>
+        </h3>
+        <div class="faq-a" id="faq-a5" role="region" aria-labelledby="faq-q5" hidden>
+          <div class="faq-a__inner">
+            Да. Мы настраиваем шаблоны ТЗ/карточек, роли, уведомления, дополнительные листы и метрики.
+            Напишите: <a href="https://t.me/Danyshes" target="_blank" rel="noopener" style="text-decoration: underline;">@Danyshes</a>.
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+<section id="partners" class="partners">
+  <div class="container">
+    <h2 class="section-title">Создано при поддержке</h2>
+
+    <div class="partners-panel">
+      <!-- Левая колонка: партнёр -->
+      <div class="partner-col">
+        <div class="partner-head">
+          <img src="assets/digiup.jpg" alt="DigiUp" class="partner-logo">
+          <div>
+            <h3 class="partner-name">DigiUp</h3>
+            <p class="partner-tag">Технологический партнёр</p>
+          </div>
+        </div>
+
+        <p class="partner-desc">
+          Платформа и агентство по digital‑автоматизации и контенту. DigiUp поддерживает развитие DigiSheets как технологического партнёра.
+        </p>
+
+        <div class="partner-actions">
+          <a href="/partners/digiup.html" class="btn secondary">Страница партнёра</a>
+          <a href="https://digiup.ru" target="_blank" rel="noopener" class="btn primary">Перейти на сайт</a>
+        </div>
+      </div>
+
+      <!-- Правая колонка: CTA -->
+      <aside class="partner-cta">
+        <h3>Хотите стать партнёром?</h3>
+        <p>Мы открыты к новым технологическим и медиа‑партнёрствам.</p>
+        <a href="/partners/become.html" class="btn primary">Оставить заявку</a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <a class="logo" href="#hero">DigiSheets</a>
+      <p>AI-инструменты для контент-команд на базе Google&nbsp;Таблиц.</p>
+    </div>
+
+    <nav class="footer__nav" aria-label="Навигация футера">
+      <strong>Продукт</strong>
+      <a href="#features">Возможности</a>
+      <a href="#walkthrough">Быстрый запуск</a>
+      <a href="#cases">Кейсы</a>
+      <a href="#guide">Гайд</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+
+    <nav class="footer__nav" aria-label="Компания">
+      <strong>Компания</strong>
+      <a href="#partners">Партнёры</a>
+      <a href="#testimonials">Отзывы</a>
+      <a href="#custom">Внедрение</a>
+      <a href="/blog/">Блог</a>
+      <a href="/privacy-policy.html">Политика конфиденциальности</a>
+    </nav>
+  </div>
+
+  <div class="footer__bottom">
+    <div class="container">
+  © DigiSheets, 2025 • <a href="mailto:info@digisheets.ru">info@digisheets.ru</a>
+</div>
+  </div>
+</footer>
+
+  <script src="main.js" defer></script>
+  
+</body>
+</html>

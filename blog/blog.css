@@ -1,0 +1,243 @@
+/* ====== БЛОГ (theme-aware через data-theme) ====== */
+
+/* Контейнер статьи */
+.post-wrap {
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+/* Основная типографика поста */
+.post-content {
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 18px;
+  word-wrap: break-word;
+}
+
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4 {
+  line-height: 1.25;
+  margin: 1.6em 0 .6em;
+  font-weight: 800;
+}
+
+.post-content h1 { font-size: 34px; }
+.post-content h2 { font-size: 28px; border-bottom: 1px solid var(--line); padding-bottom: .3em; }
+.post-content h3 { font-size: 22px; }
+.post-content h4 { font-size: 18px; color: var(--muted); }
+
+.post-content p { margin: 1em 0; }
+
+.post-content ul,
+.post-content ol {
+  margin: .6em 0 1.2em 1.4em;
+  padding: 0;
+}
+.post-content li { margin: .35em 0; }
+
+.post-content a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px dashed color-mix(in oklab, var(--accent) 70%, transparent);
+}
+.post-content a:hover { border-bottom-style: solid; }
+
+/* Обложка и картинки */
+.post-cover {
+  display: block;
+  width: 100%;
+  max-height: 380px;
+  object-fit: cover;
+  border-radius: 14px;
+  margin: 8px 0 18px;
+  background: var(--card);
+  box-shadow: 0 0 0 1px var(--line);
+}
+
+.post-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 10px;
+  margin: 16px auto;
+  background: var(--card);
+  box-shadow: 0 0 0 1px var(--line);
+}
+
+/* Таблицы */
+.post-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 16px;
+  background: var(--card);
+}
+.post-content th,
+.post-content td {
+  border: 1px solid var(--line);
+  padding: 10px 12px;
+  vertical-align: top;
+  color: var(--text);
+}
+/* Шапка таблиц в постах */
+.post-content thead th {
+  background: var(--table-head-bg);
+  font-weight: 700;
+}
+
+/* Светлая тема */
+:root[data-theme="light"] {
+  --table-head-bg: color-mix(in srgb, var(--card) 90%, #000 10%);
+}
+
+/* Тёмная тема */
+:root[data-theme="dark"] {
+  --table-head-bg: color-mix(in srgb, var(--card) 85%, #4da3ff 15%);
+}
+
+
+/* Цитаты */
+.post-content blockquote {
+  margin: 16px 0;
+  padding: 12px 16px;
+  border-left: 4px solid var(--accent);
+  background: color-mix(in oklab, var(--card) 70%, transparent);
+  color: var(--text);
+  border-radius: 8px;
+}
+
+/* Код и преформатированный текст */
+.post-content code {
+  background: color-mix(in oklab, var(--card) 85%, transparent);
+  border: 1px solid var(--line);
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 0.95em;
+}
+.post-content pre {
+  overflow: auto;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin: 14px 0;
+}
+.post-content pre code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+/* Метаданные поста */
+.post-meta {
+  color: var(--muted);
+  font-size: 14px;
+  margin: -4px 0 16px;
+}
+
+/* Карточки в списке блога */
+.blog-card__cover {
+  display: block;
+  width: 100%;
+  max-height: 380px; /* как в постах */
+  object-fit: cover;
+  border-radius: 14px; /* как у .post-cover */
+  margin-bottom: 12px;
+  background: var(--bg-soft);
+  box-shadow: 0 0 0 1px var(--border);
+}
+
+
+/* «Назад к статьям» */
+.btn.back { margin-bottom: 12px; }
+
+/* Ограничение ширины списка блога для воздуха */
+.blog-list-narrow {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Мелкие улучшения типографики */
+.post-content hr {
+  border: 0;
+  height: 1px;
+  background: var(--line);
+  margin: 24px 0;
+}
+.post-content strong { font-weight: 800; }
+.post-content em { color: var(--muted); }
+
+/* Обложка внутри страницы поста — без обрезания */
+article .post-cover {
+  width: 100%;
+  height: auto;        /* считаем высоту из ширины */
+  max-height: none;    /* не ограничиваем высоту */
+  object-fit: unset;   /* убираем cover, чтобы не кропало */
+}
+
+/* ====== Статистика поста (просмотры + лайк) ====== */
+.post-stats {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin: 8px 0 18px;
+  color: var(--muted);
+}
+
+.post-stats__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--card) 85%, transparent);
+  box-shadow: 0 0 0 1px var(--line) inset;
+  font-size: 14px;
+}
+
+.post-stats__like {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: color-mix(in oklab, var(--card) 85%, transparent);
+  color: var(--text);
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform .05s ease, box-shadow .2s ease;
+}
+.post-stats__like:hover { box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 30%, transparent) inset; }
+.post-stats__like[aria-pressed="true"] { background: color-mix(in oklab, var(--accent) 18%, var(--card)); }
+.post-stats__like:active { transform: translateY(1px); }
+
+/* ====== Статистика в карточке списка ====== */
+.card-stats {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 8px;
+  margin-bottom: 12px; /* 🔹 отодвигаем от кнопки */
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.card-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--card) 85%, transparent);
+  box-shadow: 0 0 0 1px var(--line) inset;
+}
+.card-stat b { font-weight: 700; }
+
+/* Если в HTML пришли "голые" таблицы от Google Docs */
+.post-content table { width:100%; border-collapse: collapse; }
+.post-content th, .post-content td { border:1px solid var(--line); padding:10px 12px; }

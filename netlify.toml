@@ -1,0 +1,16 @@
+[build]
+  command = "node generate-sitemap.js"
+  publish = "."
+  functions = "netlify/functions"
+
+# ❌ Отключите генератор sitemap от Netlify (он перезаписывает ваш файл)
+# [[plugins]]
+#   package = "@netlify/plugin-sitemap"
+
+# ✅ Плагин отправки карты оставьте
+[[plugins]]
+  package = "netlify-plugin-submit-sitemap"
+  [plugins.inputs]
+  sitemapPath = "/sitemap.xml"
+  providers = ["google","yandex"]
+  ignorePeriod = 0

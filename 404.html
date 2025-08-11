@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>404 — Страница не найдена | DigiSheets</title>
+<link rel="stylesheet" href="/style.css" />
+<style>
+  :root{
+    --grid-thin: rgba(16,185,129,.12);
+    --grid-bold: rgba(16,185,129,.22);
+    --glow: 0 12px 40px rgba(16,185,129,.35);
+  }
+
+  /* сцена */
+  html,body{height:100%}
+  body{
+    margin:0; display:grid; place-items:center; overflow:hidden;
+    background: radial-gradient(1200px 800px at 15% -10%, rgba(16,185,129,.12), transparent 60%),
+                radial-gradient(900px 600px at 110% 110%, rgba(16,185,129,.10), transparent 55%),
+                var(--bg);
+    color:var(--text);
+    font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    transition: background-color .35s ease, color .35s ease;
+  }
+
+  /* анимированный grid-лист */
+  .sheet{
+    position:fixed; inset:-12vmax; pointer-events:none; opacity:.5;
+    background:
+      repeating-linear-gradient(to right,  transparent 0 39px, var(--grid-thin) 39px 40px),
+      repeating-linear-gradient(to right,  transparent 0 159px, var(--grid-bold) 159px 160px),
+      repeating-linear-gradient(to bottom, transparent 0 39px, var(--grid-thin) 39px 40px),
+      repeating-linear-gradient(to bottom, transparent 0 159px, var(--grid-bold) 159px 160px);
+    transform: rotate(-2deg) scale(1.08);
+    animation: gridMove 22s linear infinite;
+  }
+  @keyframes gridMove{
+    to{ background-position: 40px 0, 160px 0, 0 40px, 0 160px; }
+  }
+
+  /* блики */
+  .blob{
+    position:fixed; width:40vmax; height:40vmax; border-radius:50%;
+    filter: blur(50px); opacity:.25; pointer-events:none; mix-blend-mode:soft-light;
+  }
+  .blob.bl1{ background:#10b981; top:-10vmax; left:-10vmax; animation:float1 18s ease-in-out infinite; }
+  .blob.bl2{ background:#4ade80; bottom:-12vmax; right:-14vmax; animation:float2 20s ease-in-out infinite; }
+  @keyframes float1{ 50%{ transform: translate(4vmax,3vmax) scale(1.06); } }
+  @keyframes float2{ 50%{ transform: translate(-3vmax,-2vmax) scale(1.07);} }
+
+  /* карточка */
+  .card{
+    position:relative; z-index:1; width:min(760px, 94vw);
+    background: color-mix(in srgb, var(--card) 78%, transparent);
+    backdrop-filter: blur(10px);
+    border:1px solid color-mix(in srgb, var(--line) 70%, transparent);
+    border-radius:18px; padding:34px 26px;
+    box-shadow: 0 18px 60px rgba(0,0,0,.18);
+    text-align:center;
+    transition: background-color .35s, color .35s, border-color .35s, box-shadow .35s, transform .15s;
+  }
+
+  .code{ font-size:108px; line-height:1; font-weight:800; letter-spacing:.02em; color:var(--text); text-shadow: var(--glow); margin:0 0 6px; }
+  .title{ font-size:22px; font-weight:800; margin:0 0 10px; }
+  .desc{ color:var(--muted); margin:0 auto 18px; max-width:58ch; }
+
+  .formula{
+    display:inline-flex; align-items:center; gap:10px;
+    border:1px solid var(--line); background:var(--card);
+    padding:10px 14px; border-radius:10px; margin:8px 0 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.06);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    color: var(--text);
+    transition: background-color .35s, border-color .35s, color .35s;
+  }
+  .fx{ font-weight:800; color:var(--brand) }
+  .typed{ white-space:nowrap; overflow:hidden; border-right:2px solid var(--text) }
+
+  .actions{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+
+  /* кнопки (в духе твоего UI) */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; cursor:pointer;
+    padding:12px 18px; border-radius:10px; font-weight:700; text-decoration:none;
+    border:2px solid transparent; transition:.25s;
+  }
+  .btn.primary{ background:var(--brand); color:#fff }
+  .btn.primary:hover{ background:var(--brand-700) }
+  .btn.secondary{ background:transparent; border-color:var(--brand); color:var(--brand) }
+  .btn.secondary:hover{ background: rgba(16,185,129,.08) }
+
+  /* плавающая кнопка темы */
+  .theme-toggle{
+    position:fixed; top:14px; right:14px; z-index:2;
+    border:1px solid var(--line); background:var(--card); color:var(--text);
+    border-radius:999px; padding:8px 12px; font-weight:700; cursor:pointer;
+    box-shadow:0 8px 24px rgba(0,0,0,.08);
+    transition: background-color .35s, color .35s, border-color .35s;
+  }
+
+  /* параллакс карточки */
+  @media (hover:hover){
+    .card{ transform: perspective(1000px) rotateX(0) rotateY(0); }
+  }
+
+  /* адаптив */
+  @media (max-width:600px){
+    .code{ font-size:78px }
+    .title{ font-size:20px }
+  }
+
+  /* доступность */
+  @media (prefers-reduced-motion:reduce){
+    .sheet, .blob{ animation:none }
+    .typed{ border-right:none }
+  }
+
+  /* ===== 404: mobile & reduced-motion lite mode ===== */
+@media (max-width: 640px), (prefers-reduced-motion: reduce) {
+  /* фон без анимаций/паттернов */
+  .notfound-page {
+    background: var(--bg) !important; /* однотонный */
+  }
+
+  /* карточка попроще */
+  .nf-card {
+    width: 92vw !important;
+    max-width: 480px;
+    padding: 20px 16px !important;
+    border-radius: 12px !important;
+    background: var(--card) !important;
+    border: 1px solid var(--line) !important;
+    box-shadow: none !important;      /* убрали тяжёлые тени */
+    transform: none !important;       /* без 3D/скейлов */
+  }
+
+  /* крупные цифры, но без жирных эффектов */
+  .nf-code   { font-size: 64px !important; text-shadow: none !important; }
+  .nf-title  { font-size: 18px !important; margin-top: 6px; }
+  .nf-text   { font-size: 14px !important; line-height: 1.5; }
+
+  /* кнопка — обычная, кликабельная, без подсветок */
+  .nf-actions .btn {
+    padding: 10px 14px !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  /* задушим любые бегущие анимации/переходы */
+  * {
+    animation: none !important;
+    transition: none !important;
+    backdrop-filter: none !important;
+  }
+
+  @media (max-width: 640px) {
+  .formula {
+    display: flex;          /* разрешаем перенос внутри flex */
+    flex-wrap: wrap;        /* перенос слов и частей формулы */
+    justify-content: center;
+    white-space: normal;    /* ломаем жёсткий nowrap */
+    text-align: center;
+  }
+  .formula .typed {
+    white-space: normal;    /* убираем блокировку переноса */
+  }
+}
+
+}
+
+</style>
+</head>
+<body>
+  <!-- toggle темы -->
+  <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false">🌙 Тёмная</button>
+
+  <div class="sheet" aria-hidden="true"></div>
+  <div class="blob bl1" aria-hidden="true"></div>
+  <div class="blob bl2" aria-hidden="true"></div>
+
+  <main class="card" role="main" aria-labelledby="h404">
+    <div class="code" id="h404">404</div>
+    <div class="title">Страница не найдена</div>
+    <p class="desc">Похоже, ссылка ведёт в пустую ячейку. Вернёмся в таблицу и попробуем ещё раз?</p>
+
+    <div class="formula" aria-hidden="true">
+      <span class="fx">=IFERROR</span><span>(</span>
+      <span class="typed" id="typed"></span><span>, "not_found")</span>
+    </div>
+
+    <div class="actions">
+      <a class="btn primary" href="/">На главную</a>
+      <a class="btn secondary" href="/#features">К возможностям</a>
+    </div>
+  </main>
+
+  <script>
+  // 1) Лайт-режим: мобилка или reduced motion → вешаем класс, если нужно скрыть что-то изначально
+  (function () {
+    const lite = window.matchMedia('(max-width: 640px)').matches ||
+                 window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (lite) document.documentElement.classList.add('nf-lite');
+  })();
+
+  // 2) Поддержка темы: если у тебя на сайте уже есть логика data-theme — можно подхватить localStorage
+  (function () {
+    try {
+      const saved = localStorage.getItem('ds-theme');
+      const theme = saved === 'dark' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+    } catch (e) {}
+  })();
+</script>
+
+
+<script>
+  // === тема: читаем localStorage и переключаем ===
+  (function(){
+    const root = document.documentElement;
+    const btn = document.getElementById('themeToggle');
+    function apply(theme){
+      root.setAttribute('data-theme', theme);
+      localStorage.setItem('ds-theme', theme);
+      btn.textContent = theme === 'dark' ? '☀️ Светлая' : '🌙 Тёмная';
+      btn.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+    }
+    const saved = localStorage.getItem('ds-theme');
+    apply(saved === 'dark' ? 'dark' : 'light');
+    btn.addEventListener('click', ()=>{
+      const cur = root.getAttribute('data-theme');
+      apply(cur === 'dark' ? 'light' : 'dark');
+    });
+  })();
+
+  // лёгкий 3D-параллакс
+  (function(){
+    const card = document.querySelector('.card');
+    if (!card || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let raf=0;
+    card.addEventListener('mousemove', e=>{
+      cancelAnimationFrame(raf);
+      raf=requestAnimationFrame(()=>{
+        const r=card.getBoundingClientRect();
+        const x=(e.clientX-(r.left+r.width/2))/(r.width/2);
+        const y=(e.clientY-(r.top+r.height/2))/(r.height/2);
+        card.style.transform=`perspective(1000px) rotateX(${(-y*4).toFixed(2)}deg) rotateY(${(x*6).toFixed(2)}deg)`;
+      });
+    });
+    card.addEventListener('mouseleave', ()=> card.style.transform='perspective(1000px) rotateX(0) rotateY(0)');
+  })();
+
+  // печать формулы
+  (function(){
+    const el = document.getElementById('typed');
+    if (!el || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const text = 'ROUTE("/features")';
+    let i=0, show=true;
+    function type(){
+      if(i<=text.length){ el.textContent = text.slice(0,i++); setTimeout(type, 30); }
+      else blink();
+    }
+    function blink(){
+      show = !show;
+      el.style.borderRightColor = show ? 'currentColor' : 'transparent';
+      setTimeout(blink, 450);
+    }
+    type();
+  })();
+</script>
+</body>
+</html>

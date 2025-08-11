@@ -1,0 +1,8 @@
+{
+  "name": "digisheets-site",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "build": "node generate-sitemap.js"
+  }
+}
