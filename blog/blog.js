@@ -337,7 +337,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const cut = (s, n=80) => {
       const t = String(s || '').trim();
       if (t.length <= n) return t;
-      return t.slice(0, n).replace(/\s+\S*$/, '') + '…'; // не рвём слово
+      return t.slice(0, n).replace(/\s+\S*$/, '') + '…';
     };
 
     posts.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -349,12 +349,20 @@ document.addEventListener('DOMContentLoaded', async () => {
           <h3 class="feature-title">
             <a href="/blog/post.html?slug=${encodeURIComponent(p.slug)}">${esc(p.title)}</a>
           </h3>
+
+          <!-- 🔹 Статичный блок статистики для списка (НЕ кнопки) -->
+          <div id="stats-${esc(p.slug)}" class="post-stats post-stats--list" aria-live="polite">
+            <span class="post-stats__item" title="Просмотры">👁️ <b data-role="views">0</b></span>
+            <span class="post-stats__item" title="Лайки">❤️ <b data-role="likes">0</b></span>
+          </div>
+
           <p class="feature-text feature-text--compact">${esc(desc)}</p>
           <p class="feature-text feature-date">${fmtDate(p.date)}</p>
           <a class="btn secondary btn--compact" href="/blog/post.html?slug=${encodeURIComponent(p.slug)}">Читать</a>
         </article>
       `;
     }).join('');
+
 
     // --- (опционально) наполнение статистики после рендера списка ---
     const safeNum = v => Number.isFinite(Number(v)) ? Number(v) : 0;

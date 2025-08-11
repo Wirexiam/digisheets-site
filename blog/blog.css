@@ -321,3 +321,25 @@ article .post-cover {
 }
 .post-stats__like[aria-pressed="true"] span,
 .post-stats__like[aria-pressed="true"] { color: var(--text); }
+
+/* ===== Статистика в карточке списка (статичная) ===== */
+.features__grid .post-stats.post-stats--list {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 6px 0 8px;
+}
+
+.features__grid .post-stats--list .post-stats__item {
+  font-size: 13px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--card) 85%, transparent);
+  box-shadow: 0 0 0 1px var(--line) inset;
+  color: var(--muted);
+}
+
+/* На всякий случай: если где-то просочится .post-stats__like — прячем её в списке */
+.features__grid .post-stats--list .post-stats__like {
+  display: none !important;
+}
