@@ -16,5 +16,14 @@
     "tags": ["ИИ", "История", "Будущее"],
     "cover": "/assets/posts/razvitie_neyrosetey_ot_pervykh_eksperimentov_do_ii_budushchego.png",
     "md": "posts/razvitie-neyrosetey-ot-pervykh-eksperimentov-do-ii-budushchego.md"
+  },
+  {
+    "slug": "chto-takoe-rag-i-kak-on-pomogaet-neirosetyam-rabotat-s-vashimi-dannymi",
+    "title": "Что такое RAG и как он помогает нейросетям работать с вашими данными",
+    "description": "Разбираем, что такое Retrieval-Augmented Generation (RAG), как эта технология помогает нейросетям работать с вашими данными, повышает точность ответов и открывает новые возможности для бизнеса.",
+    "date": "2025-08-11",
+    "tags": ["ИИ", "Обучение", "Интересное"],
+    "cover": "/assets/posts/RAG.png",
+    "md": "posts/RAG.md"
   }
 ]
