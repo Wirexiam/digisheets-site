@@ -274,10 +274,6 @@ document.addEventListener('DOMContentLoaded', async () => {
           <h3 class="feature-title">
             <a href="/blog/post.html?slug=${encodeURIComponent(p.slug)}">${esc(p.title)}</a>
           </h3>
-          <div id="stats-${esc(p.slug)}" class="post-stats post-stats--list" aria-live="polite">
-            <span class="post-stats__item" title="Просмотры">👁️ <b data-role="views">0</b></span>
-            <span class="post-stats__item" title="Лайки">❤️ <b data-role="likes">0</b></span>
-          </div>
           <p class="feature-text feature-text--compact">${esc(desc)}</p>
           <p class="feature-text feature-date">${fmtDate(p.date)}</p>
           <a class="btn secondary btn--compact" href="/blog/post.html?slug=${encodeURIComponent(p.slug)}">Читать</a>
