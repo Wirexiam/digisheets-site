@@ -9,19 +9,19 @@ const _safeNum = (v, d = 0) => {
 
 // ---- API обёртки с явным no-store, логами и проверкой JSON ----
 async function _apiGetViews(slug) {
-  const url = `/netlify/functions/views?slug=${encodeURIComponent(slug)}`;
+  const url = `/.netlify/functions/views?slug=${encodeURIComponent(slug)}`;
   const r = await fetch(url, { method: 'GET', cache: 'no-store' });
   if (!r.ok) throw new Error(`views failed: ${r.status} ${r.statusText}`);
   return r.json(); // { views, likes }
 }
 async function _apiGetLikes(slug) {
-  const url = `/netlify/functions/likes?slug=${encodeURIComponent(slug)}`;
+  const url = `/.netlify/functions/likes?slug=${encodeURIComponent(slug)}`;
   const r = await fetch(url, { method: 'GET', cache: 'no-store' });
   if (!r.ok) throw new Error(`likes get failed: ${r.status} ${r.statusText}`);
   return r.json(); // { views, likes, liked }
 }
 async function _apiToggleLike(slug) {
-  const url = `/netlify/functions/likes?slug=${encodeURIComponent(slug)}`;
+  const url = `/.netlify/functions/likes?slug=${encodeURIComponent(slug)}`;
   const r = await fetch(url, { method: 'POST', cache: 'no-store' });
   if (!r.ok) throw new Error(`likes post failed: ${r.status} ${r.statusText}`);
   return r.json(); // { likes, liked }
