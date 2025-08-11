@@ -9,7 +9,6 @@
   <link rel="stylesheet" href="/blog/blog.css">
 </head>
 <body>
-  <!-- Шапка как на главной -->
   <header class="header">
     <div class="container header__inner">
       <a class="logo" href="/#hero">DigiSheets</a>
@@ -47,8 +46,10 @@
   </footer>
 
   <script src="/main.js"></script>
-  <script src="/blog/blog.js"></script>
+  <!-- Модули (важен порядок: сначала stats.js, потом blog.js) -->
+  <script type="module" src="/blog/stats.js"></script>
+  <script type="module" src="/blog/blog.js"></script>
   <script>document.getElementById('year').textContent=new Date().getFullYear()</script>
-  <script>/* активная вкладка в шапке */document.querySelectorAll('.nav-link').forEach(a=>{if(a.getAttribute('href')==='/blog/')a.classList.add('active')})</script>
+  <script>document.querySelectorAll('.nav-link').forEach(a=>{if(a.getAttribute('href')==='/blog/')a.classList.add('active')})</script>
 </body>
 </html>

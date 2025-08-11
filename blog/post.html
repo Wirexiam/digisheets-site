@@ -8,11 +8,9 @@
   <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="/style.css">
   <link rel="stylesheet" href="/blog/blog.css">
-  <!-- Подсветка кода -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
 </head>
 <body>
-  <!-- Шапка как на главной -->
   <header class="header">
     <div class="container header__inner">
       <a class="logo" href="/#hero">DigiSheets</a>
@@ -42,19 +40,16 @@
     <article class="container" style="max-width:800px">
       <p><a class="btn secondary" href="/blog/">← Ко всем статьям</a></p>
       <h1 id="postTitle" style="margin:12px 0"></h1>
-        <p id="postMeta" style="color:var(--muted);margin-bottom:10px"></p>
+      <p id="postMeta" style="color:var(--muted);margin-bottom:10px"></p>
 
-        <div class="post-stats" aria-live="polite">
-          <span id="viewCount" class="post-stats__item" title="Просмотры">
-            👁️ <b>0</b>
-          </span>
+      <div class="post-stats" aria-live="polite">
+        <span id="viewCount" class="post-stats__item" title="Просмотры">👁️ <b>0</b></span>
+        <button id="likeBtn" class="post-stats__like" type="button" aria-pressed="false" title="Нравится">
+          ❤️ <span id="likeCount">0</span>
+        </button>
+      </div>
 
-          <button id="likeBtn" class="post-stats__like" type="button" aria-pressed="false" title="Нравится">
-            ❤️ <span id="likeCount">0</span>
-          </button>
-        </div>
-
-        <div id="postContent" class="post-content"></div>
+      <div id="postContent" class="post-content"></div>
     </article>
   </main>
 
@@ -63,13 +58,11 @@
   </footer>
 
   <script src="/main.js"></script>
-
-  <!-- Markdown-it + Highlight.js (CDN) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/14.1.0/markdown-it.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-
-  <!-- Наш блог-скрипт -->
-  <script src="/blog/blog.js"></script>
+  <!-- Модули (важен порядок) -->
+  <script type="module" src="/blog/stats.js"></script>
+  <script type="module" src="/blog/blog.js"></script>
   <script>document.getElementById('year').textContent=new Date().getFullYear()</script>
 </body>
 </html>
