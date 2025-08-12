@@ -1145,10 +1145,15 @@ img{max-width:100%;display:block}
 .footer-telegram {
   display: inline-flex;
   align-items: center;
-  margin-left: 10px;
+  justify-content: center;
+  margin-top: 8px;
   transition: opacity 0.2s ease;
 }
 
 .footer-telegram:hover {
   opacity: 0.8;
+}
+
+.footer-telegram img {
+  display: block;
 }
