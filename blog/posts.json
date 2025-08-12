@@ -7,5 +7,14 @@
     "tags": ["ИИ", "Обучение", "Интересное"],
     "cover": "/assets/posts/RAG.png",
     "md": "posts/RAG.md"
+  },
+  {
+    "slug": "kak-nejroseti-menyayut-podhod-k-avtomatizacii-biznes-processov.md",
+    "title": "Как нейросети меняют подход к автоматизации бизнес-процессов",
+    "description": "Рассказываем, как нейросетевые технологии перестраивают логику автоматизации, повышают эффективность, снижают затраты и создают конкурентные преимущества на примерах Google, Shell, Visa, Магнита и других компаний.",
+    "date": "2025-08-12",
+    "tags": ["ИИ", "Бизнес", "Автоматизация"],
+    "cover": "/assets/posts/article2.png",
+    "md": "posts/Kak-nejroseti-menyayut-podhod-k-avtomatizacii-biznes-processov.md"
   }
 ]
