@@ -343,3 +343,33 @@ article .post-cover {
 }
 .post-stats__like[aria-pressed="true"] span,
 .post-stats__like[aria-pressed="true"] { color: var(--text); }
+
+/* ===== Блог: адаптивная сетка без разрывов ===== */
+.features__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 1→2→3 колонки */
+  gap: 24px;                 /* расстояние между карточками */
+  align-items: stretch;      /* высота колонок одинакова */
+}
+
+.features__grid .feature-card {
+  max-width: none;           /* убираем ограничение 360px */
+  height: 100%;              /* растягиваем по колонке */
+  display: flex;
+  flex-direction: column;
+}
+
+.features__grid .blog-card__cover { 
+  max-height: 200px;         /* компактная обложка */
+}
+
+.features__grid .btn--compact {
+  margin-top: auto;          /* кнопка утыкается вниз карточки */
+}
+
+/* Тюнинг на больших экранах — три колонки гарантированно */
+@media (min-width: 1200px) {
+  .features__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
