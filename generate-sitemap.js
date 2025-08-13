@@ -1,54 +1,90 @@
-// /generate-sitemap.js
-const fs = require('fs');
-const path = require('path');
+// generate-sitemap.js — полная карта сайта по итоговому билду
+// Обходит publish-директорию (dist/ или .), находит все HTML-страницы и пишет sitemap.xml
 
-const baseUrl = 'https://digisheets.ru';
-const today = new Date().toISOString().split('T')[0];
+import fs from 'fs';
+import path from 'path';
 
-// читаем /blog/posts.json из корня
-const postsPath = path.join(__dirname, 'blog', 'posts.json');
-let posts = [];
-if (fs.existsSync(postsPath)) {
-  posts = JSON.parse(fs.readFileSync(postsPath, 'utf8'));
-}
+const SITE_URL = 'https://digisheets.ru';
 
-// статические урлы
-const staticUrls = [
-  { loc: `${baseUrl}/`, lastmod: today, changefreq: 'weekly',  priority: 1.0 },
-  { loc: `${baseUrl}/#hero`, lastmod: today, changefreq: 'monthly', priority: 0.9 },
-  { loc: `${baseUrl}/#features`, lastmod: today, changefreq: 'monthly', priority: 0.8 },
-  { loc: `${baseUrl}/#walkthrough`, lastmod: today, changefreq: 'monthly', priority: 0.8 },
-  { loc: `${baseUrl}/#cases`, lastmod: today, changefreq: 'monthly', priority: 0.7 },
-  { loc: `${baseUrl}/#guide`, lastmod: today, changefreq: 'monthly', priority: 0.8 },
-  { loc: `${baseUrl}/#testimonials`, lastmod: today, changefreq: 'yearly',  priority: 0.6 },
-  { loc: `${baseUrl}/#custom`, lastmod: today, changefreq: 'yearly',  priority: 0.7 },
-  { loc: `${baseUrl}/#partners`, lastmod: today, changefreq: 'yearly',  priority: 0.4 },
-  { loc: `${baseUrl}/partners/digiup`, lastmod: today, changefreq: 'yearly', priority: 0.8 },
-  { loc: `${baseUrl}/blog/`, lastmod: today, changefreq: 'weekly', priority: 0.8 }
+// Вычисляем корень публикации: если есть dist — берём его, иначе корень
+const ROOT = fs.existsSync(path.join(process.cwd(), 'dist'))
+  ? path.join(process.cwd(), 'dist')
+  : process.cwd();
+
+const OUT = path.join(ROOT, 'sitemap.xml');
+
+// Исключения (регулярки по путям внутри publish-директории)
+const EXCLUDE = [
+  /^\/404\.html$/i,
+  /^\/500\.html$/i,
+  /^\/blog\/post\.html$/i,      // старая страница-мост
+  /^\/netlify\//i,              // служебные
+  /^\/assets\//i,               // статические ассеты
+  /^\/blog\/posts\/.*\.md$/i    // исходники постов
 ];
 
-// посты
-const postUrls = posts.map(p => ({
-  loc: `${baseUrl}/blog/post.html?slug=${p.slug}`,
-  lastmod: p.date || today,
-  changefreq: 'monthly',
-  priority: 0.7
-}));
+function toUrlPath(fileAbs) {
+  const rel = fileAbs.replace(ROOT, '').replace(/\\/g, '/'); // кросс-платформенный путь
+  if (!rel.endsWith('.html')) return null;
 
-const urls = [...staticUrls, ...postUrls];
+  // /index.html -> /
+  if (/^\/index\.html$/i.test(rel)) return '/';
 
-const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<!-- built at ${new Date().toISOString()} -->
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map(u => `
-  <url>
-    <loc>${u.loc}</loc>
-    <lastmod>${u.lastmod}</lastmod>
-    <changefreq>${u.changefreq}</changefreq>
-    <priority>${u.priority}</priority>
-  </url>`).join('')}
-</urlset>`.trim();
+  // /dir/index.html -> /dir/
+  const m = rel.match(/^\/(.+?)\/index\.html$/i);
+  if (m) return `/${m[1].replace(/\/+/g,'/')}/`;
 
-// пишем в корень
-fs.writeFileSync(path.join(__dirname, 'sitemap.xml'), xml);
-console.log(`✅ sitemap.xml updated with ${urls.length} urls`);
+  // /page.html -> /page.html  (пускаем как есть)
+  return rel;
+}
+
+function isExcluded(urlPath) {
+  return EXCLUDE.some(re => re.test(urlPath));
+}
+
+function walk(dir) {
+  const out = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) out.push(...walk(full));
+    else if (entry.isFile() && entry.name.toLowerCase().endsWith('.html')) out.push(full);
+  }
+  return out;
+}
+
+function isoDate(p) {
+  try { return new Date(fs.statSync(p).mtime).toISOString(); }
+  catch { return new Date().toISOString(); }
+}
+
+function build() {
+  const files = walk(ROOT);
+  const items = [];
+
+  for (const f of files) {
+    const urlPath = toUrlPath(f);
+    if (!urlPath) continue;
+    if (isExcluded(urlPath)) continue;
+
+    items.push({
+      loc: SITE_URL + urlPath,
+      lastmod: isoDate(f)
+    });
+  }
+
+  // Упорядочим красиво: сначала корень, потом каталоги, затем файлы без index
+  items.sort((a, b) => a.loc.localeCompare(b.loc));
+
+  const xml = [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+  ]
+    .concat(items.map(it => `  <url><loc>${it.loc}</loc><lastmod>${it.lastmod}</lastmod></url>`))
+    .concat(['</urlset>'])
+    .join('\n');
+
+  fs.writeFileSync(OUT, xml, 'utf8');
+  console.log(`Generated ${OUT} with ${items.length} URLs`);
+}
+
+build();
