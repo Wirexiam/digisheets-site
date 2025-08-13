@@ -1,0 +1,33 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json.lck
+
+# Mac / Linux / Windows system files
+.DS_Store
+Thumbs.db
+
+# Netlify build cache
+.netlify/
+
+# Local build output (если будете собирать в dist)
+dist/
+build/
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+*.gz
+
+# Env files (если есть секреты)
+.env
+.env.local
+.env.*.local
