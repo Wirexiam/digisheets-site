@@ -272,11 +272,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         <article class="feature-card" data-slug="${esc(p.slug)}">
           ${p.cover ? `<img class="blog-card__cover" src="${p.cover}" alt="${esc(p.title)}">` : ''}
           <h3 class="feature-title">
-            <a href="/blog/post.html?slug=${encodeURIComponent(p.slug)}">${esc(p.title)}</a>
+            <a href="/blog/${encodeURIComponent(p.slug)}/">${esc(p.title)}</a>
           </h3>
           <p class="feature-text feature-text--compact">${esc(desc)}</p>
           <p class="feature-text feature-date">${fmtDate(p.date)}</p>
-          <a class="btn secondary btn--compact" href="/blog/post.html?slug=${encodeURIComponent(p.slug)}">Читать</a>
+          <a class="btn secondary btn--compact" href="/blog/${encodeURIComponent(p.slug)}/">Читать</a>
         </article>
       `;
     }).join('');

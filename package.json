@@ -3,6 +3,10 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "build": "node generate-sitemap.js"
+    "build": "node build-posts.js && node generate-sitemap.js"
+  },
+  "dependencies": {
+    "highlight.js": "11.9.0",
+    "markdown-it": "14.1.0"
   }
 }

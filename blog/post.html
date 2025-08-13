@@ -41,6 +41,16 @@
 
 </head>
 <body>
+  <script>
+  (function(){
+    try {
+      var p = new URLSearchParams(location.search);
+      var s = p.get('slug');
+      if (s) location.replace('/blog/' + encodeURIComponent(s) + '/');
+    } catch(e) {}
+  })();
+</script>
+
   <header class="header">
     <div class="container header__inner">
       <a class="logo" href="/#hero">DigiSheets</a>
