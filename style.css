@@ -1157,3 +1157,45 @@ img{max-width:100%;display:block}
 .footer-telegram img {
   display: block;
 }
+
+/* === CTA Slab === */
+.cta-slab {
+  background: linear-gradient(180deg, rgba(16,185,129,.06), transparent);
+  padding: 32px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.cta-slab--soft { background: var(--bg); }
+.cta-slab__inner { display: grid; gap: 10px; justify-items: center; text-align: center; }
+.cta-slab__inner h3 { font-size: 22px; font-weight: 800; }
+.cta-slab__inner p { color: var(--muted); }
+.cta-slab__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+
+/* === Hero note & underline link === */
+.hero__note { margin-top: 10px; color: var(--muted); }
+.link-underline { text-decoration: underline; color: var(--accent); }
+.link-underline:hover { text-decoration: none; }
+
+/* === Sticky CTA (mobile-first) === */
+.sticky-cta{
+  position: fixed; left: 0; right: 0; bottom: 12px;
+  display: none; gap: 10px; justify-content: center;
+  padding: 0 12px; z-index: 1000;
+}
+.sticky-cta__btn{
+  flex: 1; max-width: 260px;
+  text-align: center;
+  padding: 12px 16px; border-radius: 999px;
+  background: var(--accent); color: #fff; font-weight: 800;
+  box-shadow: var(--shade);
+}
+.sticky-cta__btn--outline{
+  background: transparent; color: var(--accent);
+  border: 2px solid var(--accent);
+}
+@media (max-width: 768px){
+  .sticky-cta{ display: flex; }
+}
+
+/* Небольшой фикс для футера, чтобы ссылки были видимыми */
+.footer__nav a:hover { color: var(--accent); }
