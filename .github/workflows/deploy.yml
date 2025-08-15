@@ -1,0 +1,29 @@
+name: 🚀 Deploy to Beget
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 🧾 Клонируем проект
+      uses: actions/checkout@v3
+
+    - name: 🟢 Установка зависимостей
+      run: npm ci
+
+    - name: 🛠 Сборка сайта
+      run: npm run build
+
+    - name: 📤 Заливка на Beget через FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.FTP_HOST }}
+        username: ${{ secrets.FTP_USER }}
+        password: ${{ secrets.FTP_PASS }}
+        local-dir: ./dist
+        server-dir: /public_html/
