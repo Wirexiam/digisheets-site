@@ -367,6 +367,73 @@ article .post-cover {
   margin-top: auto;          /* кнопка утыкается вниз карточки */
 }
 
+/* ===== Рубрикатор категорий ===== */
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.categories li {
+  display: inline-block;
+}
+
+.categories a {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: var(--panel, #0e1628cc);
+  color: var(--text, #d7e0ff);
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.categories a:hover {
+  background: var(--accent, #9d7dff);
+  color: #fff;
+}
+
+.categories a.active {
+  background: var(--accent2, #a8ff60);
+  color: #000;
+  font-weight: 600;
+}
+
+/* ===== Рубрики/теги (пилюли) ===== */
+.blog-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 6px 0 14px;
+}
+
+.filter-pill, .tag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 14px;
+  text-decoration: none;
+  background: color-mix(in oklab, var(--card) 85%, transparent);
+  box-shadow: 0 0 0 1px var(--line) inset;
+  color: var(--text);
+}
+
+.filter-pill.is-active {
+  background: color-mix(in oklab, var(--accent) 20%, var(--card));
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 25%, transparent) inset;
+}
+
+/* теги в карточках и на странице поста */
+.card-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
+.post-tags { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0 16px; }
+
+
 /* Тюнинг на больших экранах — три колонки гарантированно */
 @media (min-width: 1200px) {
   .features__grid {

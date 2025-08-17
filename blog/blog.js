@@ -283,37 +283,72 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   // === Страница списка ==========================================
-  if (LIST) {
-    const activeCategory = getActiveCategory();
-    // Категории (фиксированные)
-    const catBox = document.getElementById('blogCategories');
-    if (catBox) {
-      const mk = (c) => {
-        const isActive = activeCategory === c.slug;
-        return `<a class="filter-pill${isActive?' is-active':''}" href="/blog/category/${encodeURIComponent(c.slug)}/" aria-pressed="${isActive?'true':'false'}">${esc(c.name)}</a>`;
-      };
-      const allBtn = `<a class="filter-pill${!activeCategory?' is-active':''}" href="/blog/">Все рубрики</a>`;
-      catBox.innerHTML = [allBtn, ...CATEGORY_LIST.map(mk)].join('');
-    }
+  // === Страница списка ==========================================
+if (LIST) {
+  const activeCategory = getActiveCategory();
+  const activeTag = (typeof getActiveTag === 'function') ? getActiveTag() : null;
 
-    const cut = (s, n=80) => { const t = String(s || '').trim(); if (t.length <= n) return t; return t.slice(0, n).replace(/\s+\S*$/, '') + '…'; };
-    posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-    LIST.innerHTML = posts.map(p => {
-      const desc = cut(p.description, 80);
-      return `
-        <article class="feature-card" data-slug="${esc(p.slug)}">
-          ${p.cover ? `<img class="blog-card__cover" src="${p.cover}" alt="${esc(p.title)}">` : ''}
-          <h3 class="feature-title">
-            <a href="/blog/${encodeURIComponent(p.slug)}/">${esc(p.title)}</a>
-          </h3>
-          <p class="feature-text feature-text--compact">${esc(desc)}</p>
-          <p class="feature-text feature-date">${fmtDate(p.date)}</p>
-          <a class="btn secondary btn--compact" href="/blog/${encodeURIComponent(p.slug)}/">Читать</a>
-        </article>
-      `;
-    }).join('');
-    initStatsList(posts, { pollMs: 15000 });
+  // Категории (фиксированные)
+  const catBox = document.getElementById('blogCategories');
+  const h1 = document.querySelector('.section-title');
+  const intro = document.getElementById('blogIntro');
+  if (activeCategory && h1) h1.textContent = `Блог: ${CATEGORY_MAP[activeCategory] || activeCategory}`;
+  if (intro) {
+    intro.textContent = activeCategory
+      ? `Показываем статьи рубрики «${CATEGORY_MAP[activeCategory] || activeCategory}».`
+      : `Свежие материалы по AI, ИИ, IT и автоматизации.`;
   }
+  if (catBox) {
+    const mk = (c) => {
+      const isActive = activeCategory === c.slug;
+      return `<a class="filter-pill${isActive?' is-active':''}" href="/blog/category/${encodeURIComponent(c.slug)}/" aria-pressed="${isActive?'true':'false'}">${esc(c.name)}</a>`;
+    };
+    const allBtn = `<a class="filter-pill${!activeCategory?' is-active':''}" href="/blog/">Все рубрики</a>`;
+    catBox.innerHTML = [allBtn, ...CATEGORY_LIST.map(mk)].join('');
+  }
+
+  // cut и фильтрация
+  const cut = (s, n = 80) => {
+    const t = String(s || '').trim();
+    if (t.length <= n) return t;
+    return t.slice(0, n).replace(/\s+\S*$/, '') + '…';
+  };
+
+  // Фильтрация
+  let listPosts = posts.slice();
+  if (activeCategory) {
+    listPosts = listPosts.filter(p => (p.category || '').toLowerCase() === String(activeCategory).toLowerCase());
+  } else if (activeTag) {
+    const norm = s => String(s || '').trim().toLowerCase();
+    listPosts = listPosts.filter(p => Array.isArray(p.tags) && p.tags.some(t => norm(t) === norm(activeTag)));
+  }
+
+  // Сортировка и рендер
+  listPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
+  LIST.innerHTML = listPosts.map(p => {
+    const desc = cut(p.description, 80);
+    return `
+      <article class="feature-card" data-slug="${esc(p.slug)}">
+        ${p.cover ? `<img class="blog-card__cover" src="${p.cover}" alt="${esc(p.title)}">` : ''}
+        <h3 class="feature-title">
+          <a href="/blog/${encodeURIComponent(p.slug)}/">${esc(p.title)}</a>
+        </h3>
+        <p class="feature-text feature-text--compact">${esc(desc)}</p>
+        <p class="feature-text feature-date">${fmtDate(p.date)}</p>
+        <a class="btn secondary btn--compact" href="/blog/${encodeURIComponent(p.slug)}/">Читать</a>
+        ${Array.isArray(p.tags) && p.tags.length
+          ? `<div class="card-tags">` + p.tags.map(t =>
+              `<a class="tag-pill" href="/blog/tag/${encodeURIComponent(t)}/">${esc(t)}</a>`
+            ).join('') + `</div>`
+          : ''
+        }
+      </article>
+    `;
+  }).join('');
+
+  initStatsList(listPosts, { pollMs: 15000 });
+}
+
 
   // === Страница поста ===========================================
   if (POST) {

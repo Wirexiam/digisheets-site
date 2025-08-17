@@ -68,6 +68,16 @@
   <main class="section">
     <div class="container">
       <h1 class="section-title" style="text-align:left">Блог</h1>
+
+      <!-- Рубрикатор (фиксированные категории) -->
+      <div id="blogCategories" class="blog-filters" aria-label="Рубрики (категории)"></div>
+
+      <!-- Короткое описание текущей подборки -->
+      <div id="blogIntro" class="blog-intro" style="margin:8px 0 18px; color:var(--muted)"></div>
+
+      <!-- (опционально) фильтры по тегам; можно оставить пустым -->
+      <div id="blogFilters" class="blog-filters" aria-label="Фильтр по тегам"></div>
+
       <div id="blogList" class="features__grid" aria-live="polite"></div>
     </div>
   </main>
