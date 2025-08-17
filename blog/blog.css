@@ -429,6 +429,34 @@ article .post-cover {
 .card-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
 .post-tags { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0 16px; }
 
+/* ===== Hover для пилюли в карточке ===== */
+.feature-card .card-tags .tag-pill {
+  transition: background .2s ease, box-shadow .2s ease, transform .15s ease, color .2s ease;
+  cursor: pointer;
+}
+
+/* hover + клавиатурный фокус */
+.feature-card .card-tags .tag-pill:hover,
+.feature-card .card-tags .tag-pill:focus-visible {
+  background: color-mix(in oklab, var(--accent) 18%, var(--card));
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 28%, transparent) inset;
+  transform: translateY(-1px);
+  color: var(--text);
+  outline: none; /* убираем стандартный, заменяем box-shadow-ом выше */
+}
+
+/* активное нажатие — возвращаем на место */
+.feature-card .card-tags .tag-pill:active {
+  transform: translateY(0);
+}
+
+/* доступность: если пользователю не нравятся анимации */
+@media (prefers-reduced-motion: reduce) {
+  .feature-card .card-tags .tag-pill {
+    transition: none;
+  }
+}
+
 
 
 /* Тюнинг на больших экранах — три колонки гарантированно */
