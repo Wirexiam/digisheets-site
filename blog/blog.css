@@ -410,7 +410,6 @@ article .post-cover {
   gap: 10px;
   margin: 6px 0 14px;
 }
-
 .filter-pill, .tag-pill {
   display: inline-flex;
   align-items: center;
@@ -423,15 +422,13 @@ article .post-cover {
   box-shadow: 0 0 0 1px var(--line) inset;
   color: var(--text);
 }
-
 .filter-pill.is-active {
   background: color-mix(in oklab, var(--accent) 20%, var(--card));
   box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 25%, transparent) inset;
 }
-
-/* теги в карточках и на странице поста */
 .card-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
 .post-tags { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0 16px; }
+
 
 
 /* Тюнинг на больших экранах — три колонки гарантированно */
