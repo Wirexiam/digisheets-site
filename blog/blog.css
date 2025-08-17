@@ -373,3 +373,41 @@ article .post-cover {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+/* ====== Фильтры и теги (рубрики) ====== */
+.blog-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 4px 0 12px;
+}
+.tag-pill, .filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 14px;
+  background: color-mix(in oklab, var(--card) 85%, transparent);
+  box-shadow: 0 0 0 1px var(--line) inset;
+  color: var(--text);
+  text-decoration: none;
+}
+.filter-pill.is-active {
+  background: color-mix(in oklab, var(--accent) 18%, var(--card));
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 25%, transparent) inset;
+}
+.post-tags {
+  display:flex;
+  flex-wrap: wrap;
+  gap:8px;
+  margin: 8px 0 16px;
+}
+/* Теги в карточке */
+.card-tags {
+  display:flex;
+  flex-wrap: wrap;
+  gap:6px;
+  margin-top: 6px;
+}
+
