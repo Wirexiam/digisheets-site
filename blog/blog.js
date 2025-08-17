@@ -6,26 +6,24 @@ document.addEventListener('DOMContentLoaded', async () => {
   const POST = document.getElementById('postContent');
 
   // === УТИЛИТЫ ===================================================
-    // === Роутинг тегов/рубрик ====================================
-  function getActiveTag() {
-    const path = location.pathname.replace(/\/+$/, '');
-    const m = path.match(/^\/blog\/tag\/([^/]+)$/i);
-    if (m) return decodeURIComponent(m[1]);
-    const q = new URLSearchParams(location.search).get('tag');
-    return q ? decodeURIComponent(q) : null;
-  }
-  const norm = (s) => String(s||'').trim().toLowerCase();
+  // === Рубрикатор (фиксированные категории) ====================
+  const CATEGORY_LIST = [
+    { slug: 'ai-models',       name: 'Обзоры моделей' },
+    { slug: 'product-updates', name: 'Обновления продукта' },
+    { slug: 'guides',          name: 'Гайды' },
+    { slug: 'useful',          name: 'Полезное' },
+    { slug: 'automation',      name: 'Автоматизация' },
+    { slug: 'industry',        name: 'Индустрия' },
+    { slug: 'business-cases',  name: 'Кейсы бизнеса' },
+  ];
+  const CATEGORY_MAP = Object.fromEntries(CATEGORY_LIST.map(c => [c.slug, c.name]));
 
-  function collectTagStats(items) {
-    const map = new Map();
-    for (const p of items) {
-      const ts = Array.isArray(p.tags) ? p.tags : [];
-      for (const t of ts) {
-        const key = norm(t);
-        map.set(key, { name: t, count: (map.get(key)?.count || 0) + 1 });
-      }
-    }
-    return Array.from(map.values()).sort((a,b)=>b.count-a.count || a.name.localeCompare(b.name,'ru'));
+  function getActiveCategory() {
+    const path = location.pathname.replace(/\/+$/, '');
+    const m = path.match(/^\/blog\/category\/([^/]+)$/i);
+    if (m) return decodeURIComponent(m[1]);
+    const q = new URLSearchParams(location.search).get('category');
+    return q ? decodeURIComponent(q) : null;
   }
 
   const esc = (s) => String(s).replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
@@ -286,38 +284,21 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // === Страница списка ==========================================
   if (LIST) {
-        const activeTag = getActiveTag();
-    // Заголовок и интро
-    const h1 = document.querySelector('.section-title');
-    const intro = document.getElementById('blogIntro');
-    if (activeTag && h1) h1.textContent = `Блог: ${activeTag}`;
-    if (intro) {
-      intro.textContent = activeTag
-        ? `Показываем статьи из рубрики «${activeTag}».`
-        : `Свежие материалы по AI, ИИ, IT и автоматизации. Выберите рубрику выше, чтобы сузить выдачу.`;
-    }
-
-    // Фильтры
-    const filtersBox = document.getElementById('blogFilters');
-    if (filtersBox) {
-      const tags = collectTagStats(posts).slice(0, 12); // топ-12
-      const mk = (t, cnt) => {
-        const href = `/blog/tag/${encodeURIComponent(t)}/`;
-        const isActive = activeTag && norm(activeTag)===norm(t);
-        return `<a class="filter-pill${isActive?' is-active':''}" href="${href}" aria-pressed="${isActive?'true':'false'}">${t} · ${cnt}</a>`;
+    const activeCategory = getActiveCategory();
+    // Категории (фиксированные)
+    const catBox = document.getElementById('blogCategories');
+    if (catBox) {
+      const mk = (c) => {
+        const isActive = activeCategory === c.slug;
+        return `<a class="filter-pill${isActive?' is-active':''}" href="/blog/category/${encodeURIComponent(c.slug)}/" aria-pressed="${isActive?'true':'false'}">${esc(c.name)}</a>`;
       };
-      const allBtn = `<a class="filter-pill${!activeTag?' is-active':''}" href="/blog/">Все</a>`;
-      filtersBox.innerHTML = [allBtn, ...tags.map(x=>mk(x.name, x.count))].join('');
+      const allBtn = `<a class="filter-pill${!activeCategory?' is-active':''}" href="/blog/">Все рубрики</a>`;
+      catBox.innerHTML = [allBtn, ...CATEGORY_LIST.map(mk)].join('');
     }
-
-    // Фильтрация списка
-    let listPosts = posts.slice();
-    if (activeTag) listPosts = listPosts.filter(p => (Array.isArray(p.tags)?p.tags:[]).some(t => norm(t)===norm(activeTag)));
-    listPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
 
     const cut = (s, n=80) => { const t = String(s || '').trim(); if (t.length <= n) return t; return t.slice(0, n).replace(/\s+\S*$/, '') + '…'; };
     posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-        LIST.innerHTML = listPosts.map(p => {
+    LIST.innerHTML = posts.map(p => {
       const desc = cut(p.description, 80);
       return `
         <article class="feature-card" data-slug="${esc(p.slug)}">
@@ -328,7 +309,6 @@ document.addEventListener('DOMContentLoaded', async () => {
           <p class="feature-text feature-text--compact">${esc(desc)}</p>
           <p class="feature-text feature-date">${fmtDate(p.date)}</p>
           <a class="btn secondary btn--compact" href="/blog/${encodeURIComponent(p.slug)}/">Читать</a>
-          ${Array.isArray(p.tags) && p.tags.length ? `<div class="card-tags">` + p.tags.map(t => `<a class="tag-pill" href="/blog/tag/${encodeURIComponent(t)}/">${t}</a>`).join('') + `</div>` : ''}
         </article>
       `;
     }).join('');
@@ -359,18 +339,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.title = title ? `${title} — DigiSheets` : 'Пост — DigiSheets';
 
         const metaEl = document.getElementById('postMeta');
-        const tagsBox = document.createElement('div');
-        tagsBox.className = 'post-tags';
-        (Array.isArray(tags)?tags:[]).forEach(t => {
-          const a = document.createElement('a');
-          a.className = 'tag-pill';
-          a.href = `/blog/tag/${encodeURIComponent(t)}/`;
-          a.textContent = t;
-          tagsBox.appendChild(a);
-        });
-        const metaWrap = document.getElementById('postMeta');
-        if (metaWrap && tagsBox.childNodes.length) metaWrap.insertAdjacentElement('afterend', tagsBox);
-
+        // Хлебные крошки категории
+        const cat = (p && p.category) || '';
+        if (cat) {
+          const bc = document.createElement('p');
+          bc.className = 'post-meta';
+          bc.innerHTML = `Рубрика: <a class="tag-pill" href="/blog/category/${encodeURIComponent(cat)}/">${esc(CATEGORY_MAP[cat]||cat)}</a>`;
+          const titleEl2 = document.getElementById('postTitle');
+          if (titleEl2) titleEl2.insertAdjacentElement('afterend', bc);
+        }
         if (metaEl) metaEl.textContent = `${date ? fmtDate(date) : ''}${tags.length ? ' • ' + tags.join(', ') : ''}`;
 
         const mdDesc = document.getElementById('metaDesc'); if (mdDesc) mdDesc.setAttribute('content', description);
@@ -416,6 +393,15 @@ document.addEventListener('DOMContentLoaded', async () => {
       document.title = `${title} — DigiSheets`;
 
       const metaEl = document.getElementById('postMeta');
+        // Хлебные крошки категории
+        const cat = (p && p.category) || '';
+        if (cat) {
+          const bc = document.createElement('p');
+          bc.className = 'post-meta';
+          bc.innerHTML = `Рубрика: <a class="tag-pill" href="/blog/category/${encodeURIComponent(cat)}/">${esc(CATEGORY_MAP[cat]||cat)}</a>`;
+          const titleEl2 = document.getElementById('postTitle');
+          if (titleEl2) titleEl2.insertAdjacentElement('afterend', bc);
+        }
       if (metaEl) metaEl.textContent = `${date ? fmtDate(date) : ''}${(Array.isArray(meta.tags) ? meta.tags : tags).length ? ' • ' + (meta.tags || tags).join(', ') : ''}`;
 
       const mdDesc = document.getElementById('metaDesc'); if (mdDesc) mdDesc.setAttribute('content', description);
