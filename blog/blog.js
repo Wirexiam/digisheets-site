@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     { slug: 'useful',          name: 'Полезное' },
     { slug: 'automation',      name: 'Автоматизация' },
     { slug: 'industry',        name: 'Индустрия' },
-    { slug: 'business-cases',  name: 'Кейсы бизнеса' },
+    { slug: 'business-cases',  name: 'Бизнес-кейсы' },
   ];
   const CATEGORY_MAP = Object.fromEntries(CATEGORY_LIST.map(c => [c.slug, c.name]));
 
