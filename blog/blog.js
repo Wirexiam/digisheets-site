@@ -290,11 +290,6 @@ if (LIST) {
     const h1 = document.querySelector('.section-title');
     const intro = document.getElementById('blogIntro');
     if (activeCategory && h1) h1.textContent = `Блог: ${CATEGORY_MAP[activeCategory] || activeCategory}`;
-    if (intro) {
-      intro.textContent = activeCategory
-        ? `Показываем статьи рубрики «${CATEGORY_MAP[activeCategory] || activeCategory}».`
-        : `Свежие материалы по AI, ИИ, IT и автоматизации.`;
-    }
     if (catBox) {
       const mk = (c) => {
         const isActive = activeCategory === c.slug;
