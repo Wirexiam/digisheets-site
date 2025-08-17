@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     { slug: 'product-updates', name: 'Обновления продукта' },
     { slug: 'guides',          name: 'Гайды' },
     { slug: 'useful',          name: 'Полезное' },
-    { slug: 'automation',      name: 'Автоматизация' },
     { slug: 'industry',        name: 'Индустрия' },
     { slug: 'business-cases',  name: 'Бизнес-кейсы' },
   ];
