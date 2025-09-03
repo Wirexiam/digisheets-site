@@ -119,4 +119,4 @@ GPT или T5. GPT — для свободной генерации, T5 — дл
 
 BERT или ERNIE, особенно в связке с RAG — для релевантных и точных ответов.
 
-Подпишитесь на наш блог [digisheets.ru/blog](https://digisheets.ru/blog) и [Telegram-канал @digis\_news] (https://t.me/digis_news), чтобы не пропустить следующие статьи.
+Подпишитесь на наш блог [digisheets.ru/blog](https://digisheets.ru/blog) и [Telegram-канал @digis_news](https://t.me/digis_news), чтобы не пропустить следующие статьи.
