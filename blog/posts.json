@@ -1,20 +1,29 @@
 [
   {
-    "slug": "chto-takoe-rag-i-kak-on-pomogaet-neirosetyam-rabotat-s-vashimi-dannymi",
-    "title": "Что такое RAG и как он помогает нейросетям работать с вашими данными",
-    "description": "Разбираем, что такое RAG...",
+    "slug": "chto-takoe-rag-v-neyrosetyah-primery-i-preimushchestva",
+    "title": "Что такое RAG в нейросетях: примеры и преимущества",
+    "description": "Разбираем, как Retrieval-Augmented Generation (RAG) помогает нейросетям точнее отвечать на вопросы и работать с вашими данными.",
     "date": "2025-08-11",
     "cover": "/assets/posts/RAG.png",
     "md": "posts/RAG.md",
     "category": "useful"
   },
   {
-    "slug": "kak-nejroseti-menyayut-podhod-k-avtomatizacii-biznes-processov",
-    "title": "Как нейросети меняют подход к автоматизации бизнес-процессов",
-    "description": "Как ИИ перестраивает автоматизацию...",
+    "slug": "nejroseti-i-avtomatizaciya-biznes-processov",
+    "title": "Нейросети и автоматизация бизнес-процессов",
+    "description": "Как искусственный интеллект меняет подход к автоматизации: практические кейсы внедрения нейросетей в бизнес.",
     "date": "2025-08-12",
     "cover": "/assets/posts/article2.png",
-    "md": "posts/auto.md",
+    "md": "posts/Kak-nejroseti-menyayut-podhod-k-avtomatizacii-biznes-processov.md",
     "category": "business-cases"
+  },
+  {
+    "slug": "transformery-v-neyrosetyah-bert-t5-gpt-ernie",
+    "title": "Трансформеры в нейросетях: BERT, T5, GPT, ERNIE",
+    "description": "Что такое трансформеры в NLP, чем отличаются BERT, T5, GPT и ERNIE, и как они применяются в генерации текста и анализе данных.",
+    "date": "2025-09-03",
+    "cover": "/assets/posts/transformers.png",
+    "md": "posts/chto-takoe-transformery-v-neyrosetyah-bert-t5-gpt-i-drugie-modeli.md",
+    "category": "useful"
   }
 ]
